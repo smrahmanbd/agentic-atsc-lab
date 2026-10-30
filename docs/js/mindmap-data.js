@@ -43,6 +43,83 @@ window.MINDMAP = {
      "name": "Policy",
      "lv": "1",
      "d": "The rule that turns observations into actions: hand-written, learned or produced by an LLM."
+    },
+    {
+     "name": "Four properties",
+     "lv": "1",
+     "d": "Wooldridge & Jennings (1995): autonomy, reactivity, proactiveness, social ability."
+    },
+    {
+     "name": "Five kinds of agent",
+     "lv": "1",
+     "d": "Russell & Norvig: simple reflex (actuated gap-out), model-based, goal-based, utility-based (weighted score), learning (Q-learning)."
+    }
+   ]
+  },
+  {
+   "name": "LLM-based agents",
+   "lv": "1",
+   "d": "An agent whose reasoning core is a large language model, wrapped with instructions, tools, memory, a loop and guardrails.",
+   "children": [
+    {
+     "name": "Next-token prediction",
+     "lv": "1",
+     "d": "An LLM writes by predicting the next token (about 3/4 of a word) again and again."
+    },
+    {
+     "name": "Context window",
+     "lv": "1",
+     "d": "Everything the model can see at once: its working memory for this task."
+    },
+    {
+     "name": "Temperature",
+     "lv": "1",
+     "d": "Randomness in choosing tokens; low for control so answers repeat."
+    },
+    {
+     "name": "Hallucination",
+     "lv": "1",
+     "d": "A fluent, confident but false answer; caught by fact checks and the shield."
+    },
+    {
+     "name": "Function calling",
+     "lv": "1",
+     "d": "The model asks for a tool in a JSON format; code runs it and returns the result. MCP is an open standard for this."
+    },
+    {
+     "name": "Memory & RAG",
+     "lv": "1",
+     "d": "Short-term = context; long-term = a searchable store fetched into the prompt (retrieval-augmented generation)."
+    },
+    {
+     "name": "ReAct loop",
+     "lv": "1",
+     "d": "Thought, Action (tool call), Observation, repeated, then an answer (Yao et al., 2023)."
+    },
+    {
+     "name": "Patterns",
+     "lv": "1",
+     "d": "Single call, prompt chain, router, ReAct, plan-and-execute, reflection, orchestrator-workers, human approval. Use the simplest that works."
+    },
+    {
+     "name": "Fast vs slow",
+     "lv": "1",
+     "d": "LLM calls take ~0.5 to several seconds: rules or RL run the 1-2 s loop, the LLM supervises incidents and plans."
+    },
+    {
+     "name": "Prompt injection",
+     "lv": "1",
+     "d": "Instructions hidden in data (messages, reports) that try to take over the model; treat data as data."
+    },
+    {
+     "name": "LLM signal research",
+     "lv": "1",
+     "d": "LLMLight (decider), LA-Light (tool user + RL), iLLM-TSC (checker), CoLLMLight (cooperative), VLMLight (vision), Open-TI/TrafficGPT (analyst)."
+    },
+    {
+     "name": "LLM guardrails",
+     "lv": "1",
+     "d": "Strict JSON, allowed actions only, fact check against tools, safe fallback plan, full logging."
     }
    ]
   },
