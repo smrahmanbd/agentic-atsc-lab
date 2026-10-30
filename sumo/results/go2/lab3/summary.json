@@ -1,0 +1,50 @@
+[
+ {
+  "vehicles": 1653,
+  "delay": 9.84,
+  "stops": 0.468,
+  "co2_g": 152.3,
+  "fuel_g": 48.6,
+  "wait_p95": 12.0,
+  "wait_max": 26.0,
+  "delay_car": 9.84,
+  "stops_car": 0.468,
+  "co2_car": 152.3,
+  "label": "Actuated",
+  "controller": "actuated",
+  "switches": 254,
+  "name": "Actuated"
+ },
+ {
+  "vehicles": 1653,
+  "delay": 9.63,
+  "stops": 0.463,
+  "co2_g": 151.4,
+  "fuel_g": 48.3,
+  "wait_p95": 12.0,
+  "wait_max": 20.0,
+  "delay_car": 9.63,
+  "stops_car": 0.463,
+  "co2_car": 151.4,
+  "label": "Agentic",
+  "controller": "agentic",
+  "switches": 234,
+  "name": "Agentic (rules)"
+ },
+ {
+  "vehicles": 1653,
+  "delay": 11.68,
+  "stops": 0.554,
+  "co2_g": 158.1,
+  "fuel_g": 50.4,
+  "wait_p95": 14.0,
+  "wait_max": 17.0,
+  "delay_car": 11.68,
+  "stops_car": 0.554,
+  "co2_car": 158.1,
+  "label": "Q-learning",
+  "controller": "q_learning",
+  "switches": 245,
+  "name": "Q-learning (greedy)"
+ }
+]

@@ -1,0 +1,402 @@
+[
+  {
+    "id": "lai2025llmlight",
+    "authors": "Siqi Lai, Zhao Xu, Weijia Zhang, Hao Liu, Hui Xiong",
+    "year": 2025,
+    "title": "LLMLight: Large Language Models as Traffic Signal Control Agents",
+    "venue": "Proc. ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD 2025); arXiv:2312.16044",
+    "url": "https://arxiv.org/abs/2312.16044",
+    "contribution": "Uses an LLM as the signal-control agent, prompted with real-time traffic state and reasoning step by step, plus LightGPT, a backbone fine-tuned for TSC; on ten real and synthetic datasets it is reported to beat nine traditional/RL baselines and ten general LLMs, with interpretability rated by fifteen human experts.",
+    "topic": "llm-agentic-tsc"
+  },
+  {
+    "id": "wang2024lalight",
+    "authors": "Maonan Wang, Aoyu Pang, Yuheng Kan, Man-On Pun, Chung Shue Chen, Bo Huang",
+    "year": 2024,
+    "title": "LLM-Assisted Light: Leveraging Large Language Model Capabilities for Human-Mimetic Traffic Signal Control in Complex Urban Environments",
+    "venue": "arXiv preprint arXiv:2403.08337",
+    "url": "https://arxiv.org/abs/2403.08337",
+    "contribution": "LA-Light places an LLM at the centre of control and gives it perception and decision tools (static/dynamic traffic queries, existing TSC algorithms); in the authors' simulation platform it adapts without retraining and cuts average waiting time by 20.4% vs. RL controllers under sensor-outage conditions.",
+    "topic": "llm-agentic-tsc"
+  },
+  {
+    "id": "zhang2024trafficgpt",
+    "authors": "Siyao Zhang, Daocheng Fu, Zhao Zhang, Bin Yu, Pinlong Cai",
+    "year": 2024,
+    "title": "TrafficGPT: Viewing, Processing and Interacting with Traffic Foundation Models",
+    "venue": "Transport Policy, 150, 95-105; arXiv:2309.06719",
+    "url": "https://doi.org/10.1016/j.tranpol.2024.03.006",
+    "contribution": "Couples ChatGPT with traffic foundation models so the LLM can decompose traffic-management tasks, call tools in sequence and interact with users in natural language; the abstract reports capabilities, not quantitative control results.",
+    "topic": "llm-agentic-tsc"
+  },
+  {
+    "id": "da2024promptgat",
+    "authors": "Longchao Da, Minquan Gao, Hao Mei, Hua Wei",
+    "year": 2024,
+    "title": "Prompt to Transfer: Sim-to-Real Transfer for Traffic Signal Control with Prompt Learning",
+    "venue": "Proc. AAAI Conference on Artificial Intelligence (AAAI 2024); arXiv:2308.14284",
+    "url": "https://ojs.aaai.org/index.php/AAAI/article/view/27758",
+    "contribution": "PromptGAT uses LLM cloze-style prompts to infer how weather, road type and traffic state alter system dynamics, then grounds a DQN agent's actions to those dynamics, narrowing the sim-to-real performance gap.",
+    "topic": "llm-agentic-tsc"
+  },
+  {
+    "id": "da2024openti",
+    "authors": "Longchao Da, Kuanru Liou, Tiejin Chen, Xuesong Zhou, Xiangyong Luo, Yezhou Yang, Hua Wei",
+    "year": 2024,
+    "title": "Open-TI: Open Traffic Intelligence with Augmented Language Model",
+    "venue": "Springer journal article, DOI 10.1007/s13042-024-02190-8; arXiv:2401.00211",
+    "url": "https://arxiv.org/abs/2401.00211",
+    "contribution": "Tool-augmented LLM that runs traffic analysis end to end (map acquisition, simulation, TSC policy training) through conversation, and demonstrates an agent-to-agent setup where Open-TI passes intent to a control agent (ChatZero) that selects signal actions.",
+    "topic": "llm-agentic-tsc"
+  },
+  {
+    "id": "pang2024illmtsc",
+    "authors": "Aoyu Pang, Maonan Wang, Man-On Pun, Chung Shue Chen, Xi Xiong",
+    "year": 2024,
+    "title": "iLLM-TSC: Integration reinforcement learning and large language model for traffic signal control policy improvement",
+    "venue": "arXiv preprint arXiv:2407.06025",
+    "url": "https://arxiv.org/abs/2407.06025",
+    "contribution": "LLM-assisted RL: an RL agent proposes the phase and an LLM checks and corrects unreasonable decisions (degraded communication, rare events such as emergency vehicles), reducing average waiting time by 17.5% vs. RL alone under degraded communication.",
+    "topic": "llm-agentic-tsc"
+  },
+  {
+    "id": "yuan2026collmlight",
+    "authors": "Zirui Yuan, Siqi Lai, Hao Liu",
+    "year": 2026,
+    "title": "CoLLMLight: Cooperative Large Language Model Agents for Network-Wide Traffic Signal Control",
+    "venue": "International Conference on Learning Representations (ICLR 2026); arXiv:2503.11739",
+    "url": "https://arxiv.org/abs/2503.11739",
+    "contribution": "Network-level cooperative LLM agents using a spatiotemporal graph of neighbouring intersections, complexity-aware reasoning depth and simulation-feedback fine-tuning of a lightweight LLM; reported to outperform state-of-the-art methods on synthetic and real datasets.",
+    "topic": "llm-agentic-tsc"
+  },
+  {
+    "id": "wang2025vlmlight",
+    "authors": "Maonan Wang, Yirong Chen, Aoyu Pang, Yuxin Cai, Chung Shue Chen, Yuheng Kan, Man On Pun",
+    "year": 2025,
+    "title": "VLMLight: Safety-Critical Traffic Signal Control via Vision-Language Meta-Control and Dual-Branch Reasoning Architecture",
+    "venue": "Advances in Neural Information Processing Systems 38 (NeurIPS 2025), pp. 39590-39621",
+    "url": "https://papers.neurips.cc/paper_files/paper/2025/hash/3849b5861dcaeaf4758eef0979a98cc6-Abstract-Conference.html",
+    "contribution": "An LLM meta-controller routes routine traffic to a fast RL policy and critical cases to multi-agent LLM reasoning over image-based multi-view intersection input; emergency-vehicle waiting time drops by up to 65% vs. RL-only with <1% degradation in normal conditions.",
+    "topic": "llm-agentic-tsc"
+  },
+  {
+    "id": "guo2025heraldlight",
+    "authors": "Qing Guo, Xinhang Li, Junyu Chen, Zheng Guo, Xiaocong Li, Lin Zhang, Lei Li",
+    "year": 2025,
+    "title": "A Dual Large Language Models Architecture with Herald Guided Prompts for Parallel Fine Grained Traffic Signal Control",
+    "venue": "arXiv preprint arXiv:2511.00136",
+    "url": "https://arxiv.org/abs/2511.00136",
+    "contribution": "HeraldLight pairs an LLM-Agent that sets fine-grained timings from forecast queues with an LLM-Critic that catches errors and hallucinations; in CityFlow on Jinan, Hangzhou and New York data (224 intersections) it reports a 20.03% reduction in average travel time.",
+    "topic": "llm-agentic-tsc"
+  },
+  {
+    "id": "wei2019presslight",
+    "authors": "Hua Wei, Chacha Chen, Guanjie Zheng, Kan Wu, Vikash Gayah, Kai Xu, Zhenhui Li",
+    "year": 2019,
+    "title": "PressLight: Learning Max Pressure Control to Coordinate Traffic Signals in Arterial Network",
+    "venue": "Proc. 25th ACM SIGKDD Int. Conf. on Knowledge Discovery & Data Mining (KDD 2019), pp. 1290-1298",
+    "url": "https://doi.org/10.1145/3292500.3330949",
+    "contribution": "Grounds the RL reward in max-pressure theory (linked to throughput maximisation) with a compact state, outperforming conventional and prior learning-based controllers on arterials.",
+    "topic": "drl-marl-baselines"
+  },
+  {
+    "id": "wei2019colight",
+    "authors": "Hua Wei, Nan Xu, Huichu Zhang, Guanjie Zheng, Xinshi Zang, Chacha Chen, Weinan Zhang, Yanmin Zhu, Kai Xu, Zhenhui Li",
+    "year": 2019,
+    "title": "CoLight: Learning Network-level Cooperation for Traffic Signal Control",
+    "venue": "Proc. 28th ACM Int. Conf. on Information and Knowledge Management (CIKM 2019); arXiv:1905.05717",
+    "url": "https://doi.org/10.1145/3357384.3357902",
+    "contribution": "Uses graph attention so neighbouring signal agents communicate and coordinate, reported to outperform state-of-the-art methods on a network with hundreds of signals.",
+    "topic": "drl-marl-baselines"
+  },
+  {
+    "id": "chen2020mplight",
+    "authors": "Chacha Chen, Hua Wei, Nan Xu, Guanjie Zheng, Ming Yang, Yuanhao Xiong, Kai Xu, Zhenhui Li",
+    "year": 2020,
+    "title": "Toward A Thousand Lights: Decentralized Deep Reinforcement Learning for Large-Scale Traffic Signal Control",
+    "venue": "Proc. AAAI Conference on Artificial Intelligence, 34(04), 3414-3421",
+    "url": "https://doi.org/10.1609/aaai.v34i04.5744",
+    "contribution": "MPLight: decentralized deep RL using pressure-based regional coordination and a reward that lets agents coordinate implicitly, demonstrated on a real-world Manhattan network of 2,510 traffic lights.",
+    "topic": "drl-marl-baselines"
+  },
+  {
+    "id": "zheng2019frap",
+    "authors": "Guanjie Zheng, Yuanhao Xiong, Xinshi Zang, Jie Feng, Hua Wei, Huichu Zhang, Yong Li, Kai Xu, Zhenhui Li",
+    "year": 2019,
+    "title": "Learning Phase Competition for Traffic Signal Control",
+    "venue": "Proc. 28th ACM Int. Conf. on Information and Knowledge Management (CIKM 2019), pp. 1963-1972",
+    "url": "https://doi.org/10.1145/3357384.3357900",
+    "contribution": "FRAP models competition between phases by demand, giving invariance to flips/rotations, faster convergence and better generalisation across intersection structures.",
+    "topic": "drl-marl-baselines"
+  },
+  {
+    "id": "oroojlooy2020attendlight",
+    "authors": "Afshin Oroojlooy, Mohammadreza Nazari, Davood Hajinezhad, Jorge Silva",
+    "year": 2020,
+    "title": "AttendLight: Universal Attention-Based Reinforcement Learning Model for Traffic Signal Control",
+    "venue": "Advances in Neural Information Processing Systems 33 (NeurIPS 2020)",
+    "url": "https://papers.nips.cc/paper/2020/hash/29e48b79ae6fc68e9b6480b677453586-Abstract.html",
+    "contribution": "A single attention-based policy that handles intersections with different numbers of roads, lanes and phases without retraining, outperforming classical and RL baselines in single- and multi-environment regimes.",
+    "topic": "drl-marl-baselines"
+  },
+  {
+    "id": "zhang2022advancedxlight",
+    "authors": "Liang Zhang, Qiang Wu, Jun Shen, Linyuan Lü, Bo Du, Jianqing Wu",
+    "year": 2022,
+    "title": "Expression might be enough: representing pressure and demand for reinforcement learning based traffic signal control",
+    "venue": "arXiv preprint arXiv:2112.10107 (v3, 2022)",
+    "url": "https://arxiv.org/abs/2112.10107",
+    "contribution": "Proposes Advanced-MP (counting running and queued vehicles) and the ATS state representation, yielding Advanced-MPLight and Advanced-CoLight that reach state-of-the-art results on real-world datasets.",
+    "topic": "drl-marl-baselines"
+  },
+  {
+    "id": "wu2021efficientxlight",
+    "authors": "Qiang Wu, Liang Zhang, Jun Shen, Linyuan Lü, Bo Du, Jianqing Wu",
+    "year": 2021,
+    "title": "Efficient Pressure: Improving efficiency for signalized intersections",
+    "venue": "arXiv preprint arXiv:2112.02336",
+    "url": "https://arxiv.org/abs/2112.02336",
+    "contribution": "Introduces efficient pressure (EP) and builds Efficient-MP and the Efficient-XLight RL family, evaluated on multiple real-world datasets.",
+    "topic": "drl-marl-baselines"
+  },
+  {
+    "id": "zhang2019cityflow",
+    "authors": "Huichu Zhang, Siyuan Feng, Chang Liu, Yaoyao Ding, Yichen Zhu, Zihan Zhou, Weinan Zhang, Yong Yu, Haiming Jin, Zhenhui Li",
+    "year": 2019,
+    "title": "CityFlow: A Multi-Agent Reinforcement Learning Environment for Large Scale City Traffic Scenario",
+    "venue": "The World Wide Web Conference (WWW 2019); arXiv:1905.05217",
+    "url": "https://doi.org/10.1145/3308558.3314139",
+    "contribution": "A fast, scalable microscopic simulator for city-scale multi-agent RL, the default platform for most PressLight/CoLight/LLMLight-family studies.",
+    "topic": "benchmarks-platforms"
+  },
+  {
+    "id": "lopez2018sumo",
+    "authors": "Pablo Alvarez Lopez, Michael Behrisch, Laura Bieker-Walz, Jakob Erdmann, Yun-Pang Flötteröd, Robert Hilbrich, Leonhard Lücken, Johannes Rummel, Peter Wagner, Evamarie Wießner",
+    "year": 2018,
+    "title": "Microscopic Traffic Simulation using SUMO",
+    "venue": "21st IEEE Int. Conf. on Intelligent Transportation Systems (ITSC 2018), pp. 2575-2582",
+    "url": "https://doi.org/10.1109/ITSC.2018.8569938",
+    "contribution": "Reference description of the open-source SUMO microscopic simulator widely used for TSC, V2X and CAV studies.",
+    "topic": "benchmarks-platforms"
+  },
+  {
+    "id": "alegre2019sumorl",
+    "authors": "Lucas N. Alegre",
+    "year": 2019,
+    "title": "SUMO-RL",
+    "venue": "GitHub repository (software)",
+    "url": "https://github.com/LucasAlegre/sumo-rl",
+    "contribution": "Gymnasium/PettingZoo-compatible RL environments for traffic signal control on top of SUMO.",
+    "topic": "benchmarks-platforms"
+  },
+  {
+    "id": "ault2021resco",
+    "authors": "James Ault, Guni Sharon",
+    "year": 2021,
+    "title": "Reinforcement Learning Benchmarks for Traffic Signal Control",
+    "venue": "Proc. NeurIPS Track on Datasets and Benchmarks, Vol. 1 (2021)",
+    "url": "https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/f0935e4cd5920aa6c7c996a5ee53a70f-Abstract-round1.html",
+    "contribution": "RESCO toolkit and realistic SUMO benchmark scenarios; finds earlier methods are brittle to changed sensing assumptions and irregular intersections.",
+    "topic": "benchmarks-platforms"
+  },
+  {
+    "id": "mei2023libsignal",
+    "authors": "Hao Mei, Xiaoliang Lei, Longchao Da, Bin Shi, Hua Wei",
+    "year": 2023,
+    "title": "LibSignal: An Open Library for Traffic Signal Control",
+    "venue": "Machine Learning (Springer), DOI 10.1007/s10994-023-06412-y; arXiv:2211.10649",
+    "url": "https://arxiv.org/abs/2211.10649",
+    "contribution": "Open library benchmarking RL-TSC models across both SUMO and CityFlow with calibrated environments and shared protocols.",
+    "topic": "benchmarks-platforms"
+  },
+  {
+    "id": "muller2021lemgorl",
+    "authors": "Arthur Müller, Vishal Rangras, Georg Schnittker, Michael Waldmann, Maxim Friesen, Tobias Ferfers, Lukas Schreckenberg, Florian Hufen, Jürgen Jasperneite, Marco Wiering",
+    "year": 2021,
+    "title": "Towards Real-World Deployment of Reinforcement Learning for Traffic Signal Control",
+    "venue": "20th IEEE Int. Conf. on Machine Learning and Applications (ICMLA 2021), DOI 10.1109/ICMLA52953.2021.00085; arXiv:2103.16223",
+    "url": "https://arxiv.org/abs/2103.16223",
+    "contribution": "LemgoRL: a realistic benchmark of the German town of Lemgo with a signal-logic unit enforcing regulatory and safety constraints, aimed at deployable RL.",
+    "topic": "benchmarks-platforms"
+  },
+  {
+    "id": "varaiya2013maxpressure",
+    "authors": "Pravin Varaiya",
+    "year": 2013,
+    "title": "Max pressure control of a network of signalized intersections",
+    "venue": "Transportation Research Part C: Emerging Technologies (2013)",
+    "url": "https://doi.org/10.1016/j.trc.2013.08.014",
+    "contribution": "Introduces max-pressure control for signalized networks: a decentralized policy using only local queue information with a proven maximum-throughput (queue-stability) property.",
+    "topic": "max-pressure"
+  },
+  {
+    "id": "levin2023mpreview",
+    "authors": "Michael W. Levin",
+    "year": 2023,
+    "title": "Max-Pressure Traffic Signal Timing: A Summary of Methodological and Experimental Results",
+    "venue": "Journal of Transportation Engineering, Part A: Systems, 149(4)",
+    "url": "https://ascelibrary.com/doi/10.1061/JTEPBS.TEENG-7578",
+    "contribution": "State-of-the-art review of max-pressure variants (cycle-based, realistic flow models, measurement error, multimodal access) and their simulation and early field evidence.",
+    "topic": "max-pressure"
+  },
+  {
+    "id": "stern2024mndot",
+    "authors": "Raphael Stern, Michael W. Levin, Amir Kiani",
+    "year": 2024,
+    "title": "Toward Implementation of Max-Pressure Control on Minnesota Roads: Phase 2",
+    "venue": "Minnesota Department of Transportation, Report MN 2024-26",
+    "url": "https://rosap.ntl.bts.gov/view/dot/79015",
+    "contribution": "Hardware-in-the-loop testbed running max-pressure on a Q-Free MaxTime controller, showing MP can be safely deployed on North American signal hardware.",
+    "topic": "max-pressure"
+  },
+  {
+    "id": "guo2019cavsurvey",
+    "authors": "Qiangqiang Guo, Li Li, Xuegang (Jeff) Ban",
+    "year": 2019,
+    "title": "Urban traffic signal control with connected and automated vehicles: A survey",
+    "venue": "Transportation Research Part C: Emerging Technologies, 101, 313-334",
+    "url": "https://doi.org/10.1016/j.trc.2019.01.026",
+    "contribution": "Surveys CAV-enabled state estimation and signal optimisation, groups CAV-based control into six types under a common framework and outlines research directions.",
+    "topic": "cav-v2x"
+  },
+  {
+    "id": "feng2015cvasc",
+    "authors": "Yiheng Feng, K. Larry Head, Shayan Khoshmagham, Mehdi Zamanipour",
+    "year": 2015,
+    "title": "A real-time adaptive signal control in a connected vehicle environment",
+    "venue": "Transportation Research Part C: Emerging Technologies, 55, 460-473",
+    "url": "https://doi.org/10.1016/j.trc.2015.01.007",
+    "contribution": "Two-level phase-sequence/duration optimisation from connected-vehicle data with estimation of unequipped vehicles; in VISSIM it cuts total delay up to 16.33% vs. actuated control at high penetration but is similar at low penetration.",
+    "topic": "cav-v2x"
+  },
+  {
+    "id": "jayawardana2022ecodriving",
+    "authors": "Vindula Jayawardana, Cathy Wu",
+    "year": 2022,
+    "title": "Learning Eco-Driving Strategies at Signalized Intersections",
+    "venue": "arXiv preprint arXiv:2204.12561",
+    "url": "https://arxiv.org/abs/2204.12561",
+    "contribution": "RL eco-driving for CAVs at signals: up to 18% fuel and 25% CO2 reduction at full penetration, with 25% penetration delivering at least half of the benefit.",
+    "topic": "cav-v2x"
+  },
+  {
+    "id": "lebre2015glosa",
+    "authors": "Marie-Ange Lebre, Frédéric Le Mouël, Eric Ménard, Alexandre Garnault, Benazouz Bradaï, Vanessa Picron",
+    "year": 2015,
+    "title": "Real scenario and simulations on GLOSA traffic light system for reduced CO2 emissions, waiting time and travel time",
+    "venue": "arXiv preprint arXiv:1506.01965",
+    "url": "https://arxiv.org/abs/1506.01965",
+    "contribution": "Evaluates Green Light Optimal Speed Advisory with real driving and simulation across V2I penetration rates, reporting reduced CO2, waiting and travel time.",
+    "topic": "cav-v2x"
+  },
+  {
+    "id": "yan2021mixedautonomy",
+    "authors": "Zhongxia Yan, Cathy Wu",
+    "year": 2021,
+    "title": "Reinforcement Learning for Mixed Autonomy Intersections",
+    "venue": "IEEE Int. Intelligent Transportation Systems Conference (ITSC 2021), DOI 10.1109/ITSC48978.2021.9565000; arXiv:2111.04686",
+    "url": "https://arxiv.org/abs/2111.04686",
+    "contribution": "Multi-agent RL controlling a fraction of vehicles at unsignalized intersections; learned policies behave like signals and reach near-optimal throughput with 33-50% controlled vehicles.",
+    "topic": "cav-v2x"
+  },
+  {
+    "id": "zhang2024rlcavsurvey",
+    "authors": "Kaiwen Zhang, Zhiyong Cui, Wanjing Ma",
+    "year": 2024,
+    "title": "A survey on reinforcement learning-based control for signalized intersections with connected automated vehicles",
+    "venue": "Transport Reviews, 44(6), 1187-1208",
+    "url": "https://doi.org/10.1080/01441647.2024.2377637",
+    "contribution": "Systematic review of RL for CV/CAV-data signal control, RL trajectory planning for CAVs and cooperative signal-CAV control, with a research roadmap.",
+    "topic": "cav-v2x"
+  },
+  {
+    "id": "da2023ugat",
+    "authors": "Longchao Da, Hao Mei, Romir Sharma, Hua Wei",
+    "year": 2023,
+    "title": "Uncertainty-aware Grounded Action Transformation towards Sim-to-Real Transfer for Traffic Signal Control",
+    "venue": "arXiv preprint arXiv:2307.12388",
+    "url": "https://arxiv.org/abs/2307.12388",
+    "contribution": "UGAT applies grounded action transformation only when its uncertainty is low, narrowing the transition-dynamics gap between simulator and target environment for RL-TSC.",
+    "topic": "gaps-evidence"
+  },
+  {
+    "id": "mei2023missingdata",
+    "authors": "Hao Mei, Junxian Li, Bin Shi, Hua Wei",
+    "year": 2023,
+    "title": "Reinforcement Learning Approaches for Traffic Signal Control under Missing Data",
+    "venue": "Proc. 32nd Int. Joint Conf. on Artificial Intelligence (IJCAI 2023), DOI 10.24963/ijcai.2023/251",
+    "url": "https://arxiv.org/abs/2304.10722",
+    "contribution": "Imputes missing states (and rewards) so RL controllers keep working at intersections without sensors, staying robust across missing-data rates.",
+    "topic": "gaps-evidence"
+  },
+  {
+    "id": "du2023safelight",
+    "authors": "Wenlu Du, Junyi Ye, Jingyi Gu, Jing Li, Hua Wei, Guiling Wang",
+    "year": 2023,
+    "title": "SafeLight: A Reinforcement Learning Method toward Collision-free Traffic Signal Control",
+    "venue": "Proc. AAAI Conference on Artificial Intelligence, 37(12), 14801-14810",
+    "url": "https://doi.org/10.1609/aaai.v37i12.26729",
+    "contribution": "Safety-enhanced residual RL with multi-objective loss and reward shaping based on road-safety standards, significantly reducing collisions while improving mobility.",
+    "topic": "gaps-evidence"
+  },
+  {
+    "id": "ault2020interpretable",
+    "authors": "James Ault, Josiah P. Hanna, Guni Sharon",
+    "year": 2020,
+    "title": "Learning an Interpretable Traffic Signal Control Policy",
+    "venue": "arXiv preprint arXiv:1912.11023",
+    "url": "https://arxiv.org/abs/1912.11023",
+    "contribution": "Learns regulatable polynomial (interpretable) signal policies via modified Deep Q-learning, reducing delay up to 19.4% vs. actuated control while remaining inspectable.",
+    "topic": "gaps-evidence"
+  },
+  {
+    "id": "kwesiga2026robustness",
+    "authors": "Dickens Kwesiga, Angshuman Guin, Khaled Abdelghany, Michael Hunter",
+    "year": 2026,
+    "title": "Evaluating the Robustness of Reinforcement Learning based Adaptive Traffic Signal Control",
+    "venue": "arXiv preprint arXiv:2603.15283",
+    "url": "https://arxiv.org/abs/2603.15283",
+    "contribution": "RL controller with field-realistic eight-phase ring-barrier structure cuts delay 11-32% vs. optimised actuated control but degrades under substantially different O-D demand unless trained on diverse patterns.",
+    "topic": "gaps-evidence"
+  },
+  {
+    "id": "rafi2026sim2signal",
+    "authors": "Ferdous Al Rafi, Susrik Mukherjee, Latika Liladhar Dekate, Jennifer Yawa Lavoe, Huaiyuan Yao, Shlok Mohanty, Longchao Da, Xuesong Zhou, Hua Wei",
+    "year": 2026,
+    "title": "Sim2Signal: Sim-to-Real Benchmarks for Traffic Signal Control",
+    "venue": "arXiv preprint arXiv:2609.01676",
+    "url": "https://arxiv.org/abs/2609.01676",
+    "contribution": "Decomposes the sim-to-real gap into observation, action, transition and reward gaps and tests 18 mitigation methods over 33 gap settings and 10 calibrated networks; direct transfer always degrades and no mitigation wins everywhere.",
+    "topic": "gaps-evidence"
+  },
+  {
+    "id": "zhang2026equity",
+    "authors": "Xiaocai Zhang, Neema Nassir, Lok Sang Chan, Milad Haghani",
+    "year": 2026,
+    "title": "Human-Centric Traffic Signal Control for Equity: A Multi-Agent Action Branching Deep Reinforcement Learning Approach",
+    "venue": "arXiv preprint arXiv:2602.02959",
+    "url": "https://arxiv.org/abs/2602.02959",
+    "contribution": "MA2B-DDQN rewards minimising the number of delayed people (pedestrians, occupants, transit riders) on a Melbourne corridor, shifting TSC objectives from vehicles to travellers.",
+    "topic": "gaps-evidence"
+  },
+  {
+    "id": "nie2025llm4tr",
+    "authors": "Tong Nie, Jian Sun, Wei Ma",
+    "year": 2025,
+    "title": "Exploring the Roles of Large Language Models in Reshaping Transportation Systems: A Survey, Framework, and Roadmap",
+    "venue": "Elsevier journal article, DOI 10.1016/j.ait.2025.100003; arXiv:2503.21411",
+    "url": "https://arxiv.org/abs/2503.21411",
+    "contribution": "LLM4TR framework classifying LLM roles in transportation as information processors, knowledge encoders, component generators and decision facilitators, with a research roadmap.",
+    "topic": "surveys-future"
+  },
+  {
+    "id": "karim2025llmsafety",
+    "authors": "Muhammad Monjurul Karim, Yan Shi, Shucheng Zhang, Bingzhang Wang, Mehrdad Nasri, Yinhai Wang",
+    "year": 2025,
+    "title": "Large Language Models and Their Applications in Roadway Safety and Mobility Enhancement: A Comprehensive Review",
+    "venue": "Elsevier journal article, DOI 10.1016/j.ait.2025.100004; arXiv:2506.06301",
+    "url": "https://arxiv.org/abs/2506.06301",
+    "contribution": "Reviews LLM adaptation for mobility (including signal control) and safety, V2X/edge enablers, and names hallucination, reasoning deficits, data governance and safety assurance as key challenges.",
+    "topic": "surveys-future"
+  }
+]

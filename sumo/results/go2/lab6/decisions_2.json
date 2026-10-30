@@ -1,0 +1,242 @@
+[
+ {
+  "t": 5.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep EW: score 0.0 vs 0.0 (queue 0 still to serve)"
+ },
+ {
+  "t": 10.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "LLM: switching now to be responsive"
+ },
+ {
+  "t": 15.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: switching now to be responsive  [shield: switch before minimum green (1 < 8 s) -> keep]"
+ },
+ {
+  "t": 20.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep NS: score 0.7 vs 0.0 (queue 0 still to serve)"
+ },
+ {
+  "t": 25.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: the current stage looks busy"
+ },
+ {
+  "t": 30.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: serve the northeast stage  [shield: unknown action 'green_NE' -> keep]"
+ },
+ {
+  "t": 35.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep NS: score 0.0 vs 0.0 (queue 0 still to serve)"
+ },
+ {
+  "t": 40.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "LLM: switch to EW: score 3.1 vs 0.7 (queue 1, longest wait 5 s)"
+ },
+ {
+  "t": 45.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep EW: score 0.7 vs 1.4 (queue 0 still to serve)"
+ },
+ {
+  "t": 50.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: switching now to be responsive  [shield: switch before minimum green (6 < 8 s) -> keep]"
+ },
+ {
+  "t": 55.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "LLM: switch to NS: score 4.9 vs 0.7 (queue 3, longest wait 8 s)"
+ },
+ {
+  "t": 60.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep NS: score 1.4 vs 1.4 (queue 1 still to serve)"
+ },
+ {
+  "t": 65.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: switch to EW: score 4.2 vs 0.0 (queue 2, longest wait 5 s)  [shield: switch before minimum green (6 < 8 s) -> keep]"
+ },
+ {
+  "t": 70.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: serve the northeast stage  [shield: unknown action 'green_NE' -> keep]"
+ },
+ {
+  "t": 75.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: the current stage looks busy"
+ },
+ {
+  "t": 80.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: the current stage looks busy"
+ },
+ {
+  "t": 85.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "LLM: switch to EW: score 11.8 vs 0.7 (queue 8, longest wait 25 s)"
+ },
+ {
+  "t": 90.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: switching now to be responsive  [shield: switch before minimum green (1 < 8 s) -> keep]"
+ },
+ {
+  "t": 95.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep EW: score 0.7 vs 2.6 (queue 0 still to serve)"
+ },
+ {
+  "t": 100.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "LLM: switch to NS: score 4.0 vs 0.7 (queue 2, longest wait 9 s)"
+ },
+ {
+  "t": 105.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep NS: score 0.7 vs 2.1 (queue 0 still to serve)"
+ },
+ {
+  "t": 110.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: the current stage looks busy"
+ },
+ {
+  "t": 115.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "LLM: switch to EW: score 8.5 vs 0.0 (queue 7, longest wait 10 s)"
+ },
+ {
+  "t": 120.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep EW: score 6.0 vs 0.7 (queue 4 still to serve)"
+ },
+ {
+  "t": 125.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: switching now to be responsive  [shield: switch before minimum green (6 < 8 s) -> keep]"
+ },
+ {
+  "t": 130.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep EW: score 0.0 vs 1.6 (queue 0 still to serve)"
+ },
+ {
+  "t": 135.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "LLM: switch to NS: score 3.0 vs 0.7 (queue 1, longest wait 9 s)"
+ },
+ {
+  "t": 140.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: switch to EW: score 2.8 vs 0.0 (queue 0, longest wait 0 s)  [shield: switch before minimum green (1 < 8 s) -> keep]"
+ },
+ {
+  "t": 145.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: switch to EW: score 5.2 vs 0.0 (queue 3, longest wait 5 s)  [shield: switch before minimum green (6 < 8 s) -> keep]"
+ },
+ {
+  "t": 150.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "LLM: switch to EW: score 6.5 vs 0.0 (queue 5, longest wait 10 s)"
+ },
+ {
+  "t": 155.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep EW: score 5.7 vs 0.0 (queue 3 still to serve)"
+ },
+ {
+  "t": 160.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep EW: score 2.8 vs 0.7 (queue 0 still to serve)"
+ },
+ {
+  "t": 165.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep EW: score 1.4 vs 1.3 (queue 0 still to serve)"
+ },
+ {
+  "t": 170.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: the current stage looks busy"
+ },
+ {
+  "t": 175.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: clear the junction  [shield: unknown action 'all_red_30s' -> keep]"
+ },
+ {
+  "t": 180.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "LLM: switch to NS: score 5.2 vs 0.7 (queue 2, longest wait 17 s)"
+ },
+ {
+  "t": 185.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep NS: score 0.7 vs 0.0 (queue 0 still to serve)"
+ },
+ {
+  "t": 190.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep NS: score 0.0 vs 0.7 (queue 0 still to serve)"
+ },
+ {
+  "t": 195.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "LLM: keep NS: score 0.0 vs 1.3 (queue 0 still to serve)"
+ },
+ {
+  "t": 200.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "LLM: switch to EW: score 2.0 vs 0.0 (queue 1, longest wait 7 s)"
+ }
+]

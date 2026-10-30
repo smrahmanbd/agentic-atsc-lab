@@ -1,0 +1,182 @@
+[
+ {
+  "episode": 1,
+  "delay": 12.84,
+  "reward": -2.11,
+  "states": 26
+ },
+ {
+  "episode": 2,
+  "delay": 11.51,
+  "reward": -1.78,
+  "states": 26
+ },
+ {
+  "episode": 3,
+  "delay": 11.22,
+  "reward": -1.49,
+  "states": 26
+ },
+ {
+  "episode": 4,
+  "delay": 12.35,
+  "reward": -2.08,
+  "states": 28
+ },
+ {
+  "episode": 5,
+  "delay": 12.01,
+  "reward": -1.79,
+  "states": 29
+ },
+ {
+  "episode": 6,
+  "delay": 11.65,
+  "reward": -1.97,
+  "states": 30
+ },
+ {
+  "episode": 7,
+  "delay": 11.28,
+  "reward": -1.67,
+  "states": 30
+ },
+ {
+  "episode": 8,
+  "delay": 11.14,
+  "reward": -1.64,
+  "states": 30
+ },
+ {
+  "episode": 9,
+  "delay": 11.5,
+  "reward": -1.7,
+  "states": 30
+ },
+ {
+  "episode": 10,
+  "delay": 12.13,
+  "reward": -1.98,
+  "states": 31
+ },
+ {
+  "episode": 11,
+  "delay": 11.0,
+  "reward": -1.6,
+  "states": 31
+ },
+ {
+  "episode": 12,
+  "delay": 11.49,
+  "reward": -1.71,
+  "states": 31
+ },
+ {
+  "episode": 13,
+  "delay": 11.11,
+  "reward": -1.5,
+  "states": 31
+ },
+ {
+  "episode": 14,
+  "delay": 11.47,
+  "reward": -1.78,
+  "states": 31
+ },
+ {
+  "episode": 15,
+  "delay": 11.97,
+  "reward": -1.9,
+  "states": 31
+ },
+ {
+  "episode": 16,
+  "delay": 12.05,
+  "reward": -1.9,
+  "states": 31
+ },
+ {
+  "episode": 17,
+  "delay": 12.0,
+  "reward": -1.9,
+  "states": 31
+ },
+ {
+  "episode": 18,
+  "delay": 11.55,
+  "reward": -1.82,
+  "states": 31
+ },
+ {
+  "episode": 19,
+  "delay": 11.71,
+  "reward": -1.89,
+  "states": 31
+ },
+ {
+  "episode": 20,
+  "delay": 11.45,
+  "reward": -1.71,
+  "states": 31
+ },
+ {
+  "episode": 21,
+  "delay": 11.57,
+  "reward": -1.68,
+  "states": 31
+ },
+ {
+  "episode": 22,
+  "delay": 11.72,
+  "reward": -1.83,
+  "states": 31
+ },
+ {
+  "episode": 23,
+  "delay": 11.85,
+  "reward": -1.88,
+  "states": 31
+ },
+ {
+  "episode": 24,
+  "delay": 12.05,
+  "reward": -1.86,
+  "states": 31
+ },
+ {
+  "episode": 25,
+  "delay": 11.21,
+  "reward": -1.57,
+  "states": 31
+ },
+ {
+  "episode": 26,
+  "delay": 11.42,
+  "reward": -1.74,
+  "states": 31
+ },
+ {
+  "episode": 27,
+  "delay": 11.36,
+  "reward": -1.56,
+  "states": 31
+ },
+ {
+  "episode": 28,
+  "delay": 11.91,
+  "reward": -1.79,
+  "states": 31
+ },
+ {
+  "episode": 29,
+  "delay": 11.58,
+  "reward": -1.81,
+  "states": 31
+ },
+ {
+  "episode": 30,
+  "delay": 12.32,
+  "reward": -2.06,
+  "states": 31
+ }
+]

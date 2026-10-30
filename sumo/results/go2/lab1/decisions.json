@@ -1,0 +1,530 @@
+[
+ {
+  "t": 1500.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.7 vs 0.0 (0 queued, 1 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1502.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.0 vs 1.3 (0 queued, 0 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1504.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.7 vs 1.6 (0 queued, 1 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1506.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.7 vs 1.9 (0 queued, 1 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1508.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 1.4 vs 2.9 (0 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1510.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 1.4 vs 3.2 (0 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1512.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to NS: score 3.5 vs 1.4 (queue 1, longest wait 12 s)"
+ },
+ {
+  "t": 1516.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 4.4 vs 2.1 (2 queued, 0 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1518.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 0.7 vs 2.7 (0 queued, 1 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1520.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 3.3 vs 0.7 (queue 2, longest wait 4 s)  [shield: switch before minimum green (4 < 8 s) -> keep]"
+ },
+ {
+  "t": 1522.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 6.7 vs 0.0 (queue 3, longest wait 6 s)  [shield: switch before minimum green (6 < 8 s) -> keep]"
+ },
+ {
+  "t": 1524.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to EW: score 7.0 vs 0.0 (queue 3, longest wait 8 s)"
+ },
+ {
+  "t": 1528.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 7.2 vs 0.0 (4 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1530.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.8 vs 0.0 (0 queued, 4 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1532.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 1.4 vs 0.0 (0 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1534.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.8 vs 0.0 (0 queued, 4 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1536.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.1 vs 0.7 (0 queued, 3 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1538.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.1 vs 1.4 (0 queued, 3 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1540.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 1.4 vs 1.4 (0 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1542.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.0 vs 0.7 (0 queued, 0 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1544.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.7 vs 2.3 (0 queued, 1 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1546.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to NS: score 3.3 vs 0.7 (queue 2, longest wait 4 s)"
+ },
+ {
+  "t": 1550.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 3.9 vs 0.7 (2 queued, 1 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1552.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 0.0 vs 0.0 (0 queued, 0 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1554.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 0.0 vs 1.1 (0 queued, 0 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1556.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 2.1 vs 0.0 (queue 1, longest wait 3 s)  [shield: switch before minimum green (6 < 8 s) -> keep]"
+ },
+ {
+  "t": 1558.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to EW: score 3.8 vs 0.0 (queue 1, longest wait 5 s)"
+ },
+ {
+  "t": 1562.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 6.8 vs 0.7 (2 queued, 5 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1564.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 3.5 vs 0.7 (0 queued, 5 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1566.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.1 vs 2.5 (0 queued, 3 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1568.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.1 vs 2.8 (0 queued, 3 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1570.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.1 vs 2.5 (0 queued, 3 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1572.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to NS: score 4.0 vs 1.4 (queue 3, longest wait 7 s)"
+ },
+ {
+  "t": 1576.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 5.4 vs 1.8 (3 queued, 1 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1578.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 3.2 vs 0.7 (queue 2, longest wait 3 s)  [shield: switch before minimum green (2 < 8 s) -> keep]"
+ },
+ {
+  "t": 1580.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 3.5 vs 0.0 (queue 2, longest wait 5 s)  [shield: switch before minimum green (4 < 8 s) -> keep]"
+ },
+ {
+  "t": 1582.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 3.8 vs 0.7 (queue 2, longest wait 7 s)  [shield: switch before minimum green (6 < 8 s) -> keep]"
+ },
+ {
+  "t": 1584.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to EW: score 5.8 vs 0.7 (queue 3, longest wait 9 s)"
+ },
+ {
+  "t": 1588.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 7.3 vs 0.7 (4 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1590.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 1.4 vs 2.0 (0 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1592.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 1.4 vs 3.0 (0 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1594.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to NS: score 3.6 vs 0.7 (queue 2, longest wait 6 s)  [shield: switch before minimum green (6 < 8 s) -> keep]"
+ },
+ {
+  "t": 1596.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to NS: score 4.6 vs 2.1 (queue 2, longest wait 8 s)"
+ },
+ {
+  "t": 1600.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 6.2 vs 1.4 (3 queued, 2 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1602.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 2.1 vs 1.8 (0 queued, 3 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1604.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 3.2 vs 0.7 (queue 2, longest wait 3 s)  [shield: switch before minimum green (4 < 8 s) -> keep]"
+ },
+ {
+  "t": 1606.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 2.8 vs 0.7 (queue 2, longest wait 5 s)  [shield: switch before minimum green (6 < 8 s) -> keep]"
+ },
+ {
+  "t": 1608.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to EW: score 3.8 vs 0.7 (queue 2, longest wait 7 s)"
+ },
+ {
+  "t": 1612.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 5.4 vs 0.7 (3 queued, 1 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1614.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.7 vs 1.1 (0 queued, 1 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1616.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.0 vs 1.4 (0 queued, 0 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1618.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.0 vs 1.8 (0 queued, 0 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1620.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 1.4 vs 2.0 (0 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1622.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.8 vs 2.3 (0 queued, 4 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1624.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 1.4 vs 2.6 (0 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1626.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to NS: score 3.0 vs 0.0 (queue 1, longest wait 13 s)"
+ },
+ {
+  "t": 1630.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 4.2 vs 0.0 (1 queued, 1 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1632.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 0.0 vs 0.7 (0 queued, 0 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1634.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 0.0 vs 0.7 (0 queued, 0 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1636.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 0.7 vs 0.7 (0 queued, 1 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1638.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 0.7 vs 1.1 (0 queued, 1 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1640.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 0.7 vs 1.4 (0 queued, 1 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1642.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 0.0 vs 1.8 (0 queued, 0 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1644.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to EW: score 2.8 vs 0.0 (queue 1, longest wait 7 s)"
+ },
+ {
+  "t": 1648.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 6.2 vs 0.0 (1 queued, 5 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1650.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.1 vs 0.0 (0 queued, 3 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1652.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 1.4 vs 0.7 (0 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1654.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 1.4 vs 0.7 (0 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1656.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.1 vs 0.0 (0 queued, 3 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1658.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.1 vs 1.3 (0 queued, 3 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1660.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to NS: score 2.3 vs 0.0 (queue 1, longest wait 4 s)"
+ },
+ {
+  "t": 1664.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 2.2 vs 0.7 (1 queued, 0 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1666.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 0.0 vs 0.7 (0 queued, 0 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1668.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 2.5 vs 0.0 (queue 1, longest wait 1 s)  [shield: switch before minimum green (4 < 8 s) -> keep]"
+ },
+ {
+  "t": 1670.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 4.2 vs 0.0 (queue 1, longest wait 3 s)  [shield: switch before minimum green (6 < 8 s) -> keep]"
+ },
+ {
+  "t": 1672.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to EW: score 4.5 vs 0.0 (queue 1, longest wait 5 s)"
+ },
+ {
+  "t": 1676.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 6.8 vs 0.0 (4 queued, 2 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1678.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 2.1 vs 0.0 (0 queued, 3 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1680.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.7 vs 1.4 (0 queued, 1 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1682.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.7 vs 1.4 (0 queued, 1 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1684.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.7 vs 2.1 (0 queued, 1 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1686.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep EW: score 0.7 vs 0.7 (0 queued, 1 arriving on EW; NS not clearly busier)"
+ },
+ {
+  "t": 1688.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to NS: score 4.4 vs 0.0 (queue 2, longest wait 2 s)"
+ },
+ {
+  "t": 1692.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 4.6 vs 2.8 (3 queued, 1 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1694.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "keep NS: score 2.1 vs 2.1 (0 queued, 3 arriving on NS; EW not clearly busier)"
+ },
+ {
+  "t": 1696.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 3.7 vs 0.0 (queue 2, longest wait 2 s)  [shield: switch before minimum green (4 < 8 s) -> keep]"
+ },
+ {
+  "t": 1698.0,
+  "jid": "J1",
+  "action": "keep",
+  "why": "switch to EW: score 6.7 vs 0.0 (queue 4, longest wait 4 s)  [shield: switch before minimum green (6 < 8 s) -> keep]"
+ },
+ {
+  "t": 1700.0,
+  "jid": "J1",
+  "action": "switch",
+  "why": "switch to EW: score 6.3 vs 0.0 (queue 4, longest wait 6 s)"
+ }
+]

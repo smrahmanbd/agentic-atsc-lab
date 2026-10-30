@@ -1,0 +1,37 @@
+{
+ "Fixed green wave": {
+  "delay": 26.48,
+  "stops": 1.11,
+  "co2_g": 252.27,
+  "wait_p95": 37.0,
+  "wait_max": 58.33
+ },
+ "Actuated": {
+  "delay": 17.52,
+  "stops": 0.89,
+  "co2_g": 228.8,
+  "wait_p95": 18.67,
+  "wait_max": 43.67
+ },
+ "Max-pressure": {
+  "delay": 24.31,
+  "stops": 0.8,
+  "co2_g": 240.87,
+  "wait_p95": 51.0,
+  "wait_max": 231.33
+ },
+ "Agents, no talk": {
+  "delay": 18.4,
+  "stops": 0.95,
+  "co2_g": 231.87,
+  "wait_p95": 18.33,
+  "wait_max": 37.67
+ },
+ "Agents, talking": {
+  "delay": 18.19,
+  "stops": 0.88,
+  "co2_g": 228.67,
+  "wait_p95": 20.0,
+  "wait_max": 41.0
+ }
+}

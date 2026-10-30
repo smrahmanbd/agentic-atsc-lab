@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Go 3 · Research</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<div class="wrap layout">
+  <aside class="route" aria-label="On this page"><span class="level-name">Go 3</span><ol></ol></aside>
+  <main class="content">
+    <header class="level-head prose">
+      <span class="go-tag">Go 3 of 3 · research</span>
+      <h1>What is still unsolved, and how to solve it</h1>
+      <p class="lede">The research landscape from max-pressure to LLM traffic agents, the gaps that stop them reaching real streets, five small experiments that make those gaps visible in SUMO, and the architectures and research questions that look most promising.</p>
+      <p class="materials-links" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><a class="btn" style="text-decoration:none" href="#materials" data-open="slides">View the lecture slides</a><a class="btn ghost" style="text-decoration:none" href="#materials" data-open="guide">Read the study guide</a></p>
+    </header>
+
+    <section class="prose" id="materials-sec">
+      <h2 id="materials" data-short="Lecture &amp; study guide">Lecture and study guide</h2>
+      <div class="mat-tabs" role="tablist" style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+        <button class="btn" type="button" role="tab" aria-selected="true" data-mode="slides" data-src="viewer.html?doc=materials/AATSC_Go3_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go3_Lecture.pptx&amp;embed=1">Lecture</button>
+        <button class="btn ghost" type="button" role="tab" aria-selected="false" data-mode="guide" data-src="viewer.html?doc=materials/AATSC_Go3_Study_Guide.pdf&amp;mode=guide&amp;embed=1">Study guide</button>
+        <a class="btn ghost" id="matFull" style="text-decoration:none" href="viewer.html?doc=materials/AATSC_Go3_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go3_Lecture.pptx" target="_blank" rel="noopener">Open in a new tab</a>
+        <a class="btn ghost" style="text-decoration:none" href="materials/AATSC_Go3_Study_Guide.pdf" download>Guide PDF</a>
+        <a class="btn ghost" style="text-decoration:none" href="materials/AATSC_Go3_Lecture.pptx" download>Slides .pptx</a>
+      </div>
+      <div id="matFrame" style="border:1px solid var(--line);border-radius:8px;overflow:hidden;aspect-ratio:16/10.6;width:100%;background:var(--sunk)">
+        <iframe id="matIframe" title="Go 3 lecture and study guide" src="viewer.html?doc=materials/AATSC_Go3_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go3_Lecture.pptx&amp;embed=1" loading="lazy" allowfullscreen style="width:100%;height:100%;border:0;display:block"></iframe>
+      </div>
+    </section>
+
+    <section class="prose">
+      <h2 id="landscape" data-short="Research landscape">1 · The research landscape</h2>
+      <p>Signal control research has moved in waves. Each wave kept the previous one as a baseline, and the newest wave, LLM agents, increasingly <em>uses</em> the older ones as tools.</p>
+      <table class="data">
+        <tr><th>Wave</th><th>Idea</th><th>Representative work</th></tr>
+        <tr><td>Adaptive systems (1980s-)</td><td>Measure demand, re-optimise cycle, split, offset</td><td>SCOOT, SCATS (see the companion labs)</td></tr>
+        <tr><td>Max-pressure (2013-)</td><td>Serve the largest in-minus-out queue; provable maximum throughput</td><td><span data-cite="varaiya2013maxpressure"></span>, review <span data-cite="levin2023mpreview"></span>, hardware-in-the-loop <span data-cite="stern2024mndot"></span></td></tr>
+        <tr><td>Deep RL / MARL (2019-)</td><td>Learn the policy from reward; agents coordinate through graphs or pressure</td><td>PressLight <span data-cite="wei2019presslight"></span>, CoLight <span data-cite="wei2019colight"></span>, MPLight <span data-cite="chen2020mplight"></span>, FRAP <span data-cite="zheng2019frap"></span>, AttendLight <span data-cite="oroojlooy2020attendlight"></span></td></tr>
+        <tr><td>LLM as tool user (2023-)</td><td>A language model orchestrates simulators and controllers for an operator</td><td>TrafficGPT <span data-cite="zhang2024trafficgpt"></span>, Open-TI <span data-cite="da2024openti"></span></td></tr>
+        <tr><td>LLM as controller (2023-)</td><td>The LLM reads the traffic state and picks the phase, with a reason</td><td>LLMLight <span data-cite="lai2025llmlight"></span>, LA-Light <span data-cite="wang2024lalight"></span>, CoLLMLight <span data-cite="yuan2026collmlight"></span></td></tr>
+        <tr><td>Hybrids (2024-)</td><td>Fast RL/rules for routine cases, LLM reasoning or critique for hard ones</td><td>iLLM-TSC <span data-cite="pang2024illmtsc"></span>, VLMLight <span data-cite="wang2025vlmlight"></span>, HeraldLight <span data-cite="guo2025heraldlight"></span>, PromptGAT <span data-cite="da2024promptgat"></span></td></tr>
+        <tr><td>Signals + CAVs</td><td>CV data as sensor; eco-driving, GLOSA; mixed autonomy</td><td><span data-cite="feng2015cvasc"></span>, <span data-cite="jayawardana2022ecodriving"></span>, <span data-cite="guo2019cavsurvey"></span>, <span data-cite="zhang2024rlcavsurvey"></span></td></tr>
+      </table>
+      <div class="callout">Every LLM controller in the reviewed literature was evaluated in simulation only; none reports a field deployment. Headline gains of about 17.5-20.4 % in waiting or travel time are reported against RL baselines in the authors' own setups.</div>
+    </section>
+
+    <section class="prose">
+      <h2 id="method" data-short="Evaluating fairly">2 · How to evaluate a new idea fairly</h2>
+      <ol>
+        <li><b>Strong baselines.</b> Always compare with well-tuned actuated control and max-pressure, not only fixed time.</li>
+        <li><b>Same everything else.</b> Same network, demand, seeds, yellow/all-red, minimum green. In our code every controller drives the same <code>Junction</code> class.</li>
+        <li><b>Several seeds.</b> Report mean and spread over at least 3 random demand patterns.</li>
+        <li><b>More than delay.</b> Stops, CO2, the 95th-percentile and longest wait (fairness), safety violations.</li>
+        <li><b>Stress tests.</b> Sensor faults, message latency and loss, demand different from training, bad model outputs.</li>
+        <li><b>Ablation.</b> Turn one component off at a time to show what actually helps.</li>
+        <li><b>Honesty.</b> Publish negative results; several of ours are.</li>
+      </ol>
+    </section>
+
+    <section class="prose">
+      <h2 id="gaps" data-short="Gap explorer">3 · Gap explorer</h2>
+      <p>Eleven gaps stand between today's research and deployment. Click one to see why it matters, the evidence, the most promising directions, and whether this lab has an experiment for it (●).</p>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Gaps, evidence and directions</h4><span class="hint">Citations link to the reference list below</span></div>
+      <div class="bay-body">
+        <div class="seg" id="gapList" role="group" aria-label="Research gaps" style="flex-wrap:wrap"></div>
+        <div id="gapCard" class="figure"></div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="experiments" data-short="Five experiments">4 · Five experiments you can rerun</h2>
+      <p>Each is a short script in <code>sumo/go3/</code>. Numbers are from our runs (one or more seeds, illustrative); rerun them and change the settings.</p>
+    </section>
+
+    <div class="bay" id="r1">
+      <div class="bay-head"><h4>R1 · Coordination under message latency and loss</h4><span class="hint">go3/r1_communication.py · 4-junction corridor</span></div>
+      <div class="bay-body bay-split">
+        <div><canvas class="chart" id="r1Cv" aria-label="Delay against latency or loss"></canvas><div class="legend" id="r1CvLeg"></div></div>
+        <div><label for="r1Mode" style="font-weight:600">Show</label> <select id="r1Mode"><option value="lat">latency</option><option value="loss">packet loss</option></select>
+          <p id="r1Txt"></p></div>
+      </div>
+    </div>
+    <div class="bay" id="r2">
+      <div class="bay-head"><h4>R2 · LLM hallucination and the safety shield</h4><span class="hint">go3/r2_hallucination_shield.py · one junction</span></div>
+      <div class="bay-body bay-split">
+        <div><canvas class="chart" id="r2Cv" aria-label="Effect of bad answers with and without shield"></canvas><div class="legend" id="r2CvLeg"></div></div>
+        <div><label for="r2Mode" style="font-weight:600">Show</label> <select id="r2Mode"><option value="delay">mean delay (s)</option><option value="wait_max">longest wait (s)</option><option value="violations">unsafe commands reaching the signal</option></select>
+          <p id="r2Txt"></p></div>
+      </div>
+    </div>
+    <div class="bay" id="r3">
+      <div class="bay-head"><h4>R3 · Detector-free control from connected vehicles</h4><span class="hint">go3/r3_cav_perception.py · one junction</span></div>
+      <div class="bay-body bay-split">
+        <div><canvas class="chart" id="r3Cv" aria-label="Delay with loop or CAV perception"></canvas><div class="legend" id="r3CvLeg"></div></div>
+        <div><p id="r3Txt"></p></div>
+      </div>
+    </div>
+    <div class="bay" id="r4">
+      <div class="bay-head"><h4>R4 · Efficiency versus fairness</h4><span class="hint">go3/r4_fairness.py · one junction, heavy main road</span></div>
+      <div class="bay-body bay-split">
+        <div><canvas class="chart" id="r4Cv" aria-label="Delay and waits against fairness weight"></canvas><div class="legend" id="r4CvLeg"></div></div>
+        <div><p id="r4Txt"></p></div>
+      </div>
+    </div>
+    <div class="bay" id="r5">
+      <div class="bay-head"><h4>R5 · Adaptivity versus predictability for eco-driving</h4><span class="hint">go3/r5_predictability.py · corridor, 50 % CAVs with GLOSA</span></div>
+      <div class="bay-body bay-split">
+        <div><canvas class="chart" id="r5Cv" aria-label="CO2 or delay against commitment horizon"></canvas><div class="legend" id="r5CvLeg"></div></div>
+        <div><label for="r5Mode" style="font-weight:600">Show</label> <select id="r5Mode"><option value="co2_g">CO2 per vehicle (g)</option><option value="delay">delay (s)</option><option value="stops">stops per vehicle</option></select>
+          <p id="r5Txt"></p></div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="future" data-short="Future solutions">5 · Future solutions: a layered agentic controller</h2>
+      <p>The evidence points to <b>layers</b>, not one big model: a fast, proven base policy; slow reasoning only when needed; a critic; a formal shield; a digital twin for testing; V2X; and people who set goals. Click a layer.</p>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Architecture for deployable agentic ATSC</h4></div>
+      <div class="bay-body">
+        <div class="seg" role="group" aria-label="Layers" style="flex-wrap:wrap">
+          <button type="button" data-fut="human">Operator in the loop</button><button type="button" data-fut="llm">Slow reasoning agent</button><button type="button" data-fut="critic">Critic / verifier</button><button type="button" data-fut="base">Fast base policy</button><button type="button" data-fut="shield">Formal safety shield</button><button type="button" data-fut="v2x">V2X &amp; CAVs</button><button type="button" data-fut="twin">Digital twin</button>
+        </div>
+        <p id="futBox" class="callout">Choose a layer.</p>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="questions" data-short="Open questions">6 · Open research questions</h2>
+      <ol>
+        <li><b>Verified LLM supervision:</b> can an LLM supervising a max-pressure or RL controller be guaranteed never to break minimum green or a maximum pedestrian wait, and what does that cost?</li>
+        <li><b>Faithful explanations:</b> do an LLM's stated reasons match what actually drove the decision? How would we measure faithfulness with engineers?</li>
+        <li><b>Which sim-to-real gap dominates</b> for LLM vs RL controllers: observation, action, transition or reward?</li>
+        <li><b>Robustness under combined faults:</b> detector outages, V2X latency and noisy prompts in one stress-test protocol.</li>
+        <li><b>Scalable coordination:</b> when should a cheap local policy escalate to expensive reasoning under a fixed compute budget?</li>
+        <li><b>Equity-aware control:</b> can operators state people-centric goals in plain language and compile them safely into constraints?</li>
+        <li><b>Low-penetration CAV co-control:</b> below about 25 % CAVs, can joint signal and eco-driving control beat actuated control?</li>
+        <li><b>Path to certification:</b> what evidence would a road authority need to approve a learning or LLM controller?</li>
+      </ol>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Build your own research question</h4></div>
+      <div class="bay-body bay-split">
+        <div id="rqOut" class="callout">Pick the four ingredients and press Build.</div>
+        <div class="controls">
+          <div class="ctl"><label for="rqGap">Gap</label><select id="rqGap" style="grid-column:1/-1"><option>safety guarantees for LLM-based control</option><option>robustness to detector faults and V2X loss</option><option>fairness for side streets and pedestrians</option><option>low CAV penetration</option><option>predictable SPaT for eco-driving</option><option>sim-to-real transfer</option><option>explainability to operators</option></select></div>
+          <div class="ctl"><label for="rqMethod">Method</label><select id="rqMethod" style="grid-column:1/-1"><option>an LLM critic over a max-pressure base policy</option><option>a shielded Q-learning agent</option><option>communicating rule-based agents</option><option>probabilistic SPaT with commitment windows</option><option>a digital-twin shadow mode</option></select></div>
+          <div class="ctl"><label for="rqSet">Setting</label><select id="rqSet" style="grid-column:1/-1"><option>a 4-junction arterial</option><option>an isolated junction with transit</option><option>a grid of 9 junctions</option><option>a corridor with 10-50 % CAVs</option></select></div>
+          <div class="ctl"><label for="rqMetric">Main metric</label><select id="rqMetric" style="grid-column:1/-1"><option>mean delay and 95th-percentile wait</option><option>safety violations per hour</option><option>CO2 per vehicle</option><option>person delay including buses</option></select></div>
+          <div><button class="btn" type="button" id="rqGo">Build</button></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="refs" data-short="References">7 · References (verified)</h2>
+      <p class="muted">40 sources checked against a live arXiv, publisher or proceedings page. Venues shown as arXiv preprints could not be confirmed as published. <span id="refCount"></span></p>
+      <div class="seg" id="refTopics" role="group" aria-label="Topic" style="flex-wrap:wrap;margin-top:8px"></div>
+      <p><input id="refQ" type="search" placeholder="Search titles, authors, contributions" style="width:100%;max-width:420px;font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)"></p>
+      <ol id="refList" style="padding-left:1.2rem"></ol>
+    </section>
+
+    <section class="prose">
+      <h2 id="recap" data-short="Recap and memory route">8 · Recap</h2>
+      <ol>
+        <li>Waves: adaptive → max-pressure → deep RL → LLM tool users → LLM controllers → hybrids; all mostly in simulation.</li>
+        <li>Fair evaluation: strong baselines, same rules, seeds, many metrics, stress tests, ablations, honest negatives.</li>
+        <li>Gaps: sim-to-real, safety, hallucination, explainability, robustness, scale and latency, equity, mixed autonomy, predictability, benchmarks, human factors.</li>
+        <li>Our experiments: on a short corridor messages help a little and latency barely matters (test more seeds); shields stop bad LLM answers but cost some delay; CAV-only sensing works but degrades at low penetration; a little fairness weight is free; committing to signal changes gives fewer stops but, in our implementation, costs more delay and CO2 than it saves.</li>
+        <li>Future: layered agents with a fast base, slow reasoning, critic, formal shield, digital twin, V2X and people in the loop.</li>
+      </ol>
+      <p>Walk them on the <a href="palace.html#go3">Go 3 memory route</a>.</p>
+    </section>
+
+    <section class="prose">
+      <h2 id="quiz" data-short="Check yourself">Check yourself</h2>
+      <div class="quiz" id="quizBox"></div>
+    </section>
+  </main>
+</div>
+<script src="js/common.js"></script>
+<script src="js/results.js"></script>
+<script src="js/go3.js"></script>
+<script src="js/quizdata.js"></script>
+<script src="js/materials.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const R = window.RESULTS || {}, REFS = R.references || [];
+  document.querySelectorAll('[data-cite]').forEach(el => { const r = REFS.find(x => x.id === el.dataset.cite); el.innerHTML = r ? `<a href="#ref-${r.id}">${r.authors.split(',')[0].split(' ').slice(-1)[0]} ${r.year}</a>` : el.dataset.cite; });
+  if (window.QUIZ) Quiz(document.getElementById('quizBox'), QUIZ.filter(q => q.go === 3), 'go3');
+});
+</script>
+</body>
+</html>

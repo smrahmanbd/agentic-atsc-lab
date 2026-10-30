@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agentic ATSC Lab</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Agentic AI for adaptive traffic signal control in three goes: principles, SUMO implementations and research, with interactive simulators, mind map, memory route, lectures, study guides and a question bank.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <span class="go-tag">Agentic AI × adaptive traffic signal control</span>
+      <h1>Traffic lights that think, talk and explain</h1>
+      <p class="lede">An AI agent perceives the junction through tools, reasons against goals, acts through a safety shield, remembers, and talks to its neighbours and to connected vehicles. This course teaches it in three goes: the principles, working agents in SUMO, and the research frontier.</p>
+      <div class="quiz-nav">
+        <a class="btn" href="go1.html" style="text-decoration:none">Start Go 1</a>
+        <a class="btn ghost" href="go2.html#setup" style="text-decoration:none">Get the SUMO code</a>
+      </div>
+    </div>
+    <div>
+      <canvas class="sim" id="heroSim" aria-label="Live junction run by an agent"></canvas>
+      <div class="log" id="heroLog" style="height:96px;margin-top:8px" aria-live="off"></div>
+      <p class="muted" style="font-size:.9rem;margin-top:6px">Live: an agent decides every 2 s. Purple lines are switches; red lines are moments the safety shield overruled it. Blue cars are connected vehicles.</p>
+    </div>
+  </section>
+
+  <div class="levels">
+    <a href="go1.html">
+      <span class="go-tag">Go 1 · beginner</span>
+      <h3>Principles and linkages</h3>
+      <ul><li>What makes AI <em>agentic</em>: perceive, reason, act, remember, talk</li><li>How adaptive signals work</li><li>Linkages: efficiency, coordination, eco-driving, ITS, AVs and CAVs</li><li>Guardrails and levels of autonomy</li></ul>
+    </a>
+    <a href="go2.html">
+      <span class="go-tag">Go 2 · hands-on</span>
+      <h3>Build agents in SUMO</h3>
+      <ul><li>Six step-by-step labs in Python + TraCI</li><li>First agent, talking agents, a learning agent</li><li>Eco-driving CAVs, priority tools</li><li>An LLM agent behind a safety shield</li></ul>
+    </a>
+    <a href="go3.html">
+      <span class="go-tag">Go 3 · research</span>
+      <h3>Gaps and future solutions</h3>
+      <ul><li>From max-pressure to LLM traffic agents</li><li>Eleven gaps, with verified evidence</li><li>Five experiments you can rerun</li><li>Layered architectures and open questions</li></ul>
+    </a>
+  </div>
+
+  <h2 id="kit">What is in the course</h2>
+  <div class="toolbelt">
+    <div><h4>Interactive elements</h4><p>A live agent you can steer by its goals, a controller race, pressure explorer, green-wave diagram, GLOSA advisor, ITS and CAV explorers, a decision inspector, a prompt-and-shield playground, a gap explorer and a research-question builder.</p></div>
+    <div><h4>SUMO code</h4><p>An <code>agentic_atsc</code> Python package (tools, goals, memory, messages, shield), six Go 2 labs and five Go 3 experiments that reproduce every figure. <a href="go2.html#setup">Set up</a>.</p></div>
+    <div><h4>Lectures and study guides</h4><p>One lecture deck and one beginner-friendly study guide per Go, readable right here: Go 1 <a href="viewer.html?doc=materials/AATSC_Go1_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go1_Lecture.pptx">lecture</a>, <a href="viewer.html?doc=materials/AATSC_Go1_Study_Guide.pdf&amp;mode=guide">guide</a> · Go 2 <a href="viewer.html?doc=materials/AATSC_Go2_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go2_Lecture.pptx">lecture</a>, <a href="viewer.html?doc=materials/AATSC_Go2_Study_Guide.pdf&amp;mode=guide">guide</a> · Go 3 <a href="viewer.html?doc=materials/AATSC_Go3_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go3_Lecture.pptx">lecture</a>, <a href="viewer.html?doc=materials/AATSC_Go3_Study_Guide.pdf&amp;mode=guide">guide</a>.</p></div>
+    <div><h4>Mind map</h4><p>Every concept on one explorable map, coloured by Go, with a definition for each node. <a href="mindmap.html">Open the mind map</a>.</p></div>
+    <div><h4>Memory route</h4><p>The whole course as a walk down Smart Boulevard: 21 places, one vivid scene per idea, with a test-yourself mode. <a href="palace.html">Walk the route</a>.</p></div>
+    <div><h4>Question bank</h4><p>Multiple-choice questions with explanations for each Go, a mixed exam and a browse-with-answers mode. <a href="quiz.html">Open the bank</a>.</p></div>
+  </div>
+</main>
+<script src="js/common.js"></script>
+<script src="js/sim.js"></script>
+<script>
+(function () {
+  const cv = document.getElementById('heroSim'), log = document.getElementById('heroLog');
+  let J = new ATSC.Junction({ seed: 5, demand: { EW: 650, NS: 320 }, cavShare: 0.3 }), A = ATSC.Agent(), acc = 0, last = performance.now();
+  function frame(now) {
+    const dt = Math.min(0.25, (now - last) / 1000); last = now; acc += dt * 4;
+    while (acc >= 1) {
+      J.step(1); A.step(J); acc -= 1;
+      if (J.t % 600 === 0) J.demand.NS = J.demand.NS === 320 ? 480 : 320;
+      if (J.t > 7200) { J = new ATSC.Junction({ seed: 5, demand: { EW: 650, NS: 320 }, cavShare: 0.3 }); A = ATSC.Agent(); }
+    }
+    ATSC.draw(cv, J);
+    log.innerHTML = A.log.slice(0, 8).map(l => `<div class="${l.blocked ? 'blk' : l.act === 'switch' ? 'sw' : ''}">t=${l.t} ${l.act.toUpperCase()} · ${l.why}</div>`).join('');
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

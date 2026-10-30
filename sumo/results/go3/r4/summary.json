@@ -1,0 +1,83 @@
+{
+ "agent": [
+  {
+   "vehicles": 1736,
+   "delay": 9.69,
+   "stops": 0.392,
+   "co2_g": 152.7,
+   "fuel_g": 48.7,
+   "wait_p95": 16.0,
+   "wait_max": 53.0,
+   "delay_car": 9.69,
+   "stops_car": 0.392,
+   "co2_car": 152.7,
+   "label": "w0",
+   "controller": "agentic",
+   "switches": 175,
+   "w": 0.0
+  },
+  {
+   "vehicles": 1736,
+   "delay": 9.56,
+   "stops": 0.435,
+   "co2_g": 153.8,
+   "fuel_g": 49.1,
+   "wait_p95": 12.0,
+   "wait_max": 22.0,
+   "delay_car": 9.56,
+   "stops_car": 0.435,
+   "co2_car": 153.8,
+   "label": "w15",
+   "controller": "agentic",
+   "switches": 230,
+   "w": 0.15
+  },
+  {
+   "vehicles": 1736,
+   "delay": 10.46,
+   "stops": 0.51,
+   "co2_g": 157.2,
+   "fuel_g": 50.1,
+   "wait_p95": 11.0,
+   "wait_max": 16.0,
+   "delay_car": 10.46,
+   "stops_car": 0.51,
+   "co2_car": 157.2,
+   "label": "w50",
+   "controller": "agentic",
+   "switches": 256,
+   "w": 0.5
+  },
+  {
+   "vehicles": 1736,
+   "delay": 10.73,
+   "stops": 0.526,
+   "co2_g": 157.7,
+   "fuel_g": 50.3,
+   "wait_p95": 12.0,
+   "wait_max": 20.0,
+   "delay_car": 10.73,
+   "stops_car": 0.526,
+   "co2_car": 157.7,
+   "label": "w100",
+   "controller": "agentic",
+   "switches": 264,
+   "w": 1.0
+  }
+ ],
+ "max_pressure": {
+  "vehicles": 1736,
+  "delay": 15.52,
+  "stops": 0.334,
+  "co2_g": 165.2,
+  "fuel_g": 52.7,
+  "wait_p95": 63.0,
+  "wait_max": 150.0,
+  "delay_car": 15.52,
+  "stops_car": 0.334,
+  "co2_car": 165.2,
+  "label": "mp",
+  "controller": "max_pressure",
+  "switches": 79
+ }
+}

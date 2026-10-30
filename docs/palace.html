@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Memory Route</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+  #map { width: 100%; height: auto; display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+  #map .stop { cursor: pointer; }
+  #map .stop:focus { outline: none; }
+  #map .stop:focus circle, #map .stop.on circle { stroke: var(--fg); stroke-width: 4; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--agent); border-radius: 8px; padding: 14px 18px; margin-top: 12px; }
+  .card h3 { margin-top: 0; }
+  .scene { font-size: 1.15rem; line-height: 1.5; }
+</style>
+</head>
+<body>
+<main class="wrap" style="padding-bottom:40px">
+  <header class="level-head prose" style="max-width:860px">
+    <h1>The memory route</h1>
+    <p class="lede">The whole course as one walk down <b>Smart Boulevard</b>: 21 places in three districts, one idea per place. Each place holds a strange, physical scene, and the strangeness is what makes it stick. Walk it once a day for a week and you can recall the course without notes.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <div class="seg" role="group" aria-label="District" id="goSeg"><button type="button" data-go="0" aria-pressed="true">Whole route</button><button type="button" data-go="1">Go 1 · Old Town</button><button type="button" data-go="2">Go 2 · Workshop Lane</button><button type="button" data-go="3">Go 3 · Research Park</button></div>
+      <button class="btn" type="button" id="walk">Walk the route</button>
+      <button class="btn ghost" type="button" id="test">Test me</button>
+    </div>
+  </header>
+  <svg id="map" viewBox="0 0 1200 560" role="img" aria-label="Map of the memory route with 21 stops"></svg>
+  <div class="card" id="card" aria-live="polite"><h3>Click a stop</h3><p class="muted">Or press "Walk the route". In "Test me" mode the idea is hidden: picture the scene, say the idea out loud, then reveal.</p></div>
+  <section class="prose" style="max-width:860px">
+    <h2 id="how">How to use the route</h2>
+    <ol>
+      <li><b>Walk it slowly once</b>, reading every scene and picturing it in colour, with sound and smell.</li>
+      <li><b>Walk it from memory</b>: close your eyes, go from place to place and say each idea.</li>
+      <li><b>Test me mode</b> each day for a week; spend extra time on the stops you miss.</li>
+      <li><b>Add your own details</b>: numbers you need for an exam can be painted onto objects in the scene.</li>
+    </ol>
+    <div id="list"></div>
+  </section>
+</main>
+<script src="js/common.js"></script>
+<script src="js/palace-data.js"></script>
+<script>
+(function () {
+  const P = window.PALACE, svg = document.getElementById('map'), card = document.getElementById('card');
+  const COL = { 1: '#6d28d9', 2: '#0f766e', 3: '#b45309' }, NAME = { 1: 'Old Town · Go 1', 2: 'Workshop Lane · Go 2', 3: 'Research Park · Go 3' };
+  let go = 0, test = false, cur = -1, timer = null;
+  // positions: three rows, snake order
+  const rows = { 1: P.filter(p => p.go === 1), 2: P.filter(p => p.go === 2), 3: P.filter(p => p.go === 3) };
+  const pos = {};
+  [1, 2, 3].forEach((g, r) => {
+    const L = rows[g], y = 105 + r * 175;
+    L.forEach((p, i) => { const t = L.length === 1 ? 0.5 : i / (L.length - 1); const x = 130 + (r % 2 ? 1 - t : t) * 940; pos[p.n] = [x, y + (i % 2 ? 22 : -14)]; });
+  });
+  function draw() {
+    const show = p => go === 0 || p.go === go;
+    let h = '';
+    [1, 2, 3].forEach((g, r) => { const y = 105 + r * 175; h += `<rect x="20" y="${y - 78}" width="1160" height="158" rx="16" fill="${COL[g]}" opacity="${go === 0 || go === g ? 0.08 : 0.03}"/><text x="36" y="${y - 54}" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="22" fill="${COL[g]}">${NAME[g]}</text>`; });
+    const pts = P.map(p => pos[p.n]);
+    let d = `M${pts[0][0]},${pts[0][1]}`;
+    for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; const mx = (x0 + x1) / 2; d += Math.abs(y1 - y0) > 80 ? ` C${x0 + (x0 > 600 ? 90 : -90)},${y0} ${x1 + (x1 > 600 ? 90 : -90)},${y1} ${x1},${y1}` : ` Q${mx},${(y0 + y1) / 2 - 30} ${x1},${y1}`; }
+    h += `<path d="${d}" fill="none" stroke="var(--muted)" stroke-width="4" stroke-dasharray="10 9" opacity=".7"/>`;
+    P.forEach((p, i) => {
+      const [x, y] = pos[p.n], o = show(p) ? 1 : 0.25;
+      h += `<g class="stop${i === cur ? ' on' : ''}" data-i="${i}" tabindex="0" role="button" aria-label="Stop ${p.n}: ${p.place}" opacity="${o}">
+        <circle cx="${x}" cy="${y}" r="21" fill="${COL[p.go]}"/><text x="${x}" y="${y + 6}" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="19" fill="#fff">${p.n}</text>
+        <text x="${x}" y="${y + 42}" text-anchor="middle" font-family="Barlow, Segoe UI, sans-serif" font-size="14" font-weight="600" fill="var(--fg)">${p.place}</text>
+        ${test ? '' : `<text x="${x}" y="${y + 59}" text-anchor="middle" font-family="Barlow, Segoe UI, sans-serif" font-size="12.5" fill="var(--muted)">${p.title}</text>`}</g>`;
+    });
+    svg.innerHTML = h;
+    svg.querySelectorAll('.stop').forEach(g => { g.addEventListener('click', () => open(+g.dataset.i)); g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(+g.dataset.i); } }); });
+  }
+  function open(i) {
+    cur = i; const p = P[i]; draw();
+    card.style.borderLeftColor = COL[p.go];
+    card.innerHTML = `<div class="muted">Stop ${p.n} of ${P.length} · ${NAME[p.go]} · ${p.place}</div>
+      <p class="scene">${p.scene}</p>` + (test ? `<button class="btn" type="button" id="reveal">Reveal the idea</button><div id="ans" hidden>` : '<div>') +
+      `<h3>${p.title}</h3><p>${p.encodes}</p><p><a href="${p.link}">Go to this section →</a></p></div>`;
+    const rv = document.getElementById('reveal'); if (rv) rv.onclick = () => { document.getElementById('ans').hidden = false; rv.remove(); };
+  }
+  document.querySelectorAll('#goSeg button').forEach(b => b.addEventListener('click', () => { go = +b.dataset.go; document.querySelectorAll('#goSeg button').forEach(x => x.setAttribute('aria-pressed', x === b)); draw(); }));
+  document.getElementById('test').onclick = e => { test = !test; e.target.textContent = test ? 'Study mode' : 'Test me'; draw(); if (cur >= 0) open(cur); };
+  document.getElementById('walk').onclick = e => {
+    if (timer) { clearInterval(timer); timer = null; e.target.textContent = 'Walk the route'; return; }
+    const L = P.map((p, i) => i).filter(i => go === 0 || P[i].go === go); let k = 0;
+    e.target.textContent = 'Stop walking'; open(L[0]);
+    timer = setInterval(() => { k++; if (k >= L.length) { clearInterval(timer); timer = null; e.target.textContent = 'Walk the route'; return; } open(L[k]); }, test ? 9000 : 7000);
+  };
+  const m = location.hash.match(/go(\d)/); if (m) { go = +m[1]; document.querySelectorAll('#goSeg button').forEach(x => x.setAttribute('aria-pressed', +x.dataset.go === go)); }
+  draw();
+  document.getElementById('list').innerHTML = [1, 2, 3].map(g => `<h3 style="color:${COL[g]}">${NAME[g]}</h3><ol start="${rows[g][0].n}">` + rows[g].map(p => `<li><b>${p.place}: ${p.title}.</b> ${p.scene} <span class="muted">→ ${p.encodes}</span></li>`).join('') + '</ol>').join('');
+})();
+</script>
+</body>
+</html>

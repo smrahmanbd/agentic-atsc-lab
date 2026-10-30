@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Go 1 · Principles</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<div class="wrap layout">
+  <aside class="route" aria-label="On this page"><span class="level-name">Go 1</span><ol></ol></aside>
+  <main class="content">
+    <header class="level-head prose">
+      <span class="go-tag">Go 1 of 3 · beginner friendly</span>
+      <h1>Agents that run traffic lights</h1>
+      <p class="lede">What an AI <em>agent</em> is, how an adaptive traffic signal works, and how the two fit together to make traffic more efficient, coordinated, greener and ready for connected and automated vehicles. No maths beyond arithmetic; every idea has something to try.</p>
+      <p class="materials-links" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><a class="btn" style="text-decoration:none" href="#materials" data-open="slides">View the lecture slides</a><a class="btn ghost" style="text-decoration:none" href="#materials" data-open="guide">Read the study guide</a></p>
+    </header>
+
+    <section class="prose" id="materials-sec">
+      <h2 id="materials" data-short="Lecture &amp; study guide">Lecture and study guide</h2>
+      <p>Step through the lecture or read the study guide right here. Arrow keys or a swipe change slides; open full screen for teaching.</p>
+      <div class="mat-tabs" role="tablist" style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+        <button class="btn" type="button" role="tab" aria-selected="true" data-mode="slides" data-src="viewer.html?doc=materials/AATSC_Go1_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go1_Lecture.pptx&amp;embed=1">Lecture</button>
+        <button class="btn ghost" type="button" role="tab" aria-selected="false" data-mode="guide" data-src="viewer.html?doc=materials/AATSC_Go1_Study_Guide.pdf&amp;mode=guide&amp;embed=1">Study guide</button>
+        <a class="btn ghost" id="matFull" style="text-decoration:none" href="viewer.html?doc=materials/AATSC_Go1_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go1_Lecture.pptx" target="_blank" rel="noopener">Open in a new tab</a>
+        <a class="btn ghost" style="text-decoration:none" href="materials/AATSC_Go1_Study_Guide.pdf" download>Guide PDF</a>
+        <a class="btn ghost" style="text-decoration:none" href="materials/AATSC_Go1_Lecture.pptx" download>Slides .pptx</a>
+      </div>
+      <div id="matFrame" style="border:1px solid var(--line);border-radius:8px;overflow:hidden;aspect-ratio:16/10.6;width:100%;background:var(--sunk)">
+        <iframe id="matIframe" title="Go 1 lecture and study guide" src="viewer.html?doc=materials/AATSC_Go1_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go1_Lecture.pptx&amp;embed=1" loading="lazy" allowfullscreen style="width:100%;height:100%;border:0;display:block"></iframe>
+      </div>
+    </section>
+
+    <section class="prose">
+      <h2 id="agent" data-short="What an agent is">1 · What "agentic AI" means</h2>
+      <p>An <b>agent</b> is a program that keeps doing four things in a loop, on its own, to reach a goal:</p>
+      <div class="agent-loop">
+        <div><b>Perceive</b>Read the world through <em>tools</em>: detectors, cameras, messages, data from connected cars.</div>
+        <div><b>Reason</b>Compare options against its <em>goals</em> (less delay, fairness, safety) using rules, a learned policy or a language model.</div>
+        <div><b>Act</b>Change something in the world: keep the green, or switch to the other stage.</div>
+        <div><b>Remember &amp; talk</b>Keep a <em>memory</em> of what happened and send <em>messages</em> to other agents.</div>
+      </div>
+      <p>What makes it <em>agentic</em> rather than just "an algorithm" is the combination: it chooses which tools to use, keeps a goal over time, explains itself, works with other agents, and runs with a degree of <b>autonomy</b>. Because it acts in the real world, it always sits behind a <b>safety shield</b>: hard rules it cannot break.</p>
+      <dl class="defs">
+        <dt>Environment</dt><dd>Everything the agent can sense and affect: here, one junction and the traffic on it.</dd>
+        <dt>Tool</dt><dd>A function the agent can call, such as <code>queue("NS")</code> or <code>priority_requests()</code>.</dd>
+        <dt>Goal</dt><dd>What "good" means, written as weights: e.g. 1 point per queued car, 0.15 points per second of the longest wait.</dd>
+        <dt>Policy</dt><dd>The rule that turns what it sees into an action. It can be hand-written, learned (reinforcement learning) or produced by a language model.</dd>
+        <dt>Shield</dt><dd>Hard safety rules checked <em>after</em> the agent decides and <em>before</em> the signal changes: minimum green, maximum green, intergreen, a fairness cap.</dd>
+      </dl>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>The agent at work</h4><span class="hint">Watch it perceive, reason, check and act every 2 seconds</span></div>
+      <div class="bay-body">
+        <div class="bay-split">
+          <canvas class="sim" id="agCv" style="height:330px" aria-label="Junction controlled by an agent"></canvas>
+          <div>
+            <div class="agent-loop" style="grid-template-columns:1fr 1fr;margin-top:0">
+              <div><b>Perceive</b><span id="agPer" class="num" style="font-size:.9rem">–</span></div>
+              <div><b>Reason</b><span id="agRea" class="num" style="font-size:.9rem">–</span></div>
+              <div><b>Shield</b><span id="agSh" style="font-size:.9rem">–</span></div>
+              <div><b>Act</b><span id="agAct" style="font-size:.9rem">–</span></div>
+            </div>
+            <p class="muted num" id="agStat" style="font-size:.9rem;margin-top:8px"></p>
+          </div>
+        </div>
+        <div class="bay-split" style="margin-top:10px">
+          <div><div class="muted" style="font-size:.85rem;margin-bottom:4px">Decision log, newest first (purple = switch, red = shield stepped in)</div><div class="log" id="agLog"></div></div>
+          <div class="controls">
+            <div class="ctl"><label for="agWq">Goal weight: queued cars</label><output id="agWqo"></output><input type="range" id="agWq" min="0" max="2" step="0.05" value="1"></div>
+            <div class="ctl"><label for="agWw">Goal weight: fairness (longest wait)</label><output id="agWwo"></output><input type="range" id="agWw" min="0" max="1" step="0.05" value="0.15"></div>
+            <div class="ctl"><label for="agWh">Switching reluctance</label><output id="agWho"></output><input type="range" id="agWh" min="0" max="8" step="0.5" value="2"></div>
+            <div class="ctl"><label for="agEW">Main road demand</label><output id="agEWo"></output><input type="range" id="agEW" min="100" max="900" step="50" value="600"></div>
+            <div class="ctl"><label for="agNS">Side road demand</label><output id="agNSo"></output><input type="range" id="agNS" min="50" max="700" step="50" value="300"></div>
+            <div class="ctl"><label for="agSp">Speed</label><output id="agSpo"></output><input type="range" id="agSp" min="1" max="12" value="4"></div>
+            <div style="display:flex;gap:8px"><button class="btn ghost" type="button" id="agPause">Pause</button><button class="btn ghost" type="button" id="agReset">Reset</button></div>
+          </div>
+        </div>
+        <p class="muted" style="margin:0;font-size:.92rem">Set fairness to 0 and the side road to 600 veh/h: waits grow. Set switching reluctance to 0: the agent flips often and wastes the yellow and all-red time. The shield always enforces an 8 s minimum green and a 60 s maximum.</p>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="atsc" data-short="How ATSC works">2 · How an adaptive traffic signal works</h2>
+      <p>A signal shares one piece of road between conflicting streams by giving each <b>stage</b> a turn. One round of all stages is a <b>cycle</b>; how the cycle is shared is the <b>split</b>; when a junction's cycle starts relative to its neighbour is the <b>offset</b>. Between greens comes the <b>intergreen</b> (yellow + all-red), which is lost time.</p>
+      <dl class="defs">
+        <dt>Fixed time</dt><dd>A stored plan, the same every cycle. Cheap and predictable, but blind to today's traffic.</dd>
+        <dt>Actuated</dt><dd>Detectors at the stop line extend the green while cars keep arriving and end it after a gap.</dd>
+        <dt>Adaptive</dt><dd>A system measures demand and re-optimises cycle, split and offset continuously, e.g. SCOOT (model-based, upstream detectors) and SCATS (degree of saturation at the stop line).</dd>
+        <dt>Max-pressure</dt><dd>A simple decentralised rule: serve the stage whose waiting vehicles minus vehicles on its exit is largest.</dd>
+        <dt>Agentic</dt><dd>Adaptive control framed as an agent: tools, goals, memory, communication, explanations and a shield. It can use any of the above as tools.</dd>
+      </dl>
+      <p>We judge controllers by <b>delay</b> (extra time compared with free flow), <b>stops</b>, <b>queue length</b>, the <b>longest wait</b> (fairness) and <b>emissions</b>.</p>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Race the controllers</h4><span class="hint">Three random hours each, same arrivals for everyone</span></div>
+      <div class="bay-body bay-split">
+        <div id="raceOut"><p class="muted">Press "Run the race".</p></div>
+        <div class="controls">
+          <div class="ctl"><label for="raceEW">Main road demand</label><output id="raceEWo"></output><input type="range" id="raceEW" min="200" max="900" step="50" value="650"></div>
+          <div class="ctl"><label for="raceNS">Side road demand</label><output id="raceNSo"></output><input type="range" id="raceNS" min="100" max="700" step="50" value="300"></div>
+          <div><button class="btn" type="button" id="raceBtn">Run the race</button></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="efficiency" data-short="Linkage: efficiency">3 · Linkage 1: efficiency</h2>
+      <p>Efficiency means moving the most people with the least delay. An agent gets there by <em>measuring</em> instead of guessing: queues, arrivals and how full the exits are. One powerful signal is <b>pressure</b>: cars waiting to enter minus cars already on the exit. Serving the highest pressure keeps the network flowing and, importantly, avoids pushing cars into a road that is already full (spill-back).</p>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Pressure explorer</h4><span class="hint">Which stage should get the green?</span></div>
+      <div class="bay-body bay-split">
+        <div><canvas class="chart" id="prCv" style="height:200px" aria-label="Waiting and exit vehicles for each stage"></canvas><p id="prOut" style="margin-top:6px"></p></div>
+        <div class="controls">
+          <div class="ctl"><label for="prIE">EW: cars waiting</label><output id="prIEo"></output><input type="range" id="prIE" min="0" max="25" value="12"></div>
+          <div class="ctl"><label for="prOE">EW: cars on exit road</label><output id="prOEo"></output><input type="range" id="prOE" min="0" max="25" value="10"></div>
+          <div class="ctl"><label for="prIN">NS: cars waiting</label><output id="prINo"></output><input type="range" id="prIN" min="0" max="25" value="7"></div>
+          <div class="ctl"><label for="prON">NS: cars on exit road</label><output id="prONo"></output><input type="range" id="prON" min="0" max="25" value="1"></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="coordination" data-short="Linkage: coordination">4 · Linkage 2: coordination</h2>
+      <p>Junctions close together should not act alone. If each upstream green is timed so that its platoon reaches the next junction on green, traffic rides a <b>green wave</b>. Classic systems set offsets centrally. Agents can instead <b>talk</b>: the upstream agent tells its neighbour "about 8 cars will reach you in 15 s", and the neighbour holds or starts its green for them. In our SUMO corridor this messaging is Lab 2 of Go 2.</p>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Green wave on a time-space diagram</h4><span class="hint">Four junctions 300 m apart, 45 km/h</span></div>
+      <div class="bay-body">
+        <canvas class="chart" id="gwCv" style="height:260px" aria-label="Time-space diagram"></canvas>
+        <p id="gwOut"></p>
+        <div class="controls" style="max-width:520px">
+          <div class="ctl"><label for="gwOff">Offset between neighbours (hand set)</label><output id="gwOffo"></output><input type="range" id="gwOff" min="0" max="59" value="5"></div>
+          <label style="font-weight:600"><input type="checkbox" id="gwTalk"> Let the agents talk (they share travel time and align themselves)</label>
+        </div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="eco" data-short="Linkage: eco-driving">5 · Linkage 3: eco-driving</h2>
+      <p>Every stop costs fuel: braking wastes energy and accelerating from rest burns more. If the signal tells approaching cars <em>when</em> it will turn green, a connected car can slow down early and glide through instead of stopping. This is <b>GLOSA</b>, Green Light Optimal Speed Advisory, using <b>SPaT</b> (Signal Phase and Timing) messages. There is a catch for adaptive control: an agent that keeps changing its mind cannot promise a time. Go 3 measures this trade-off between adaptivity and predictability.</p>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>GLOSA advisor</h4><span class="hint">Red line: no advice. Purple dashes: following the advice.</span></div>
+      <div class="bay-body bay-split">
+        <div><canvas class="chart" id="glCv" style="height:230px" aria-label="Distance-time trajectory approaching a red light"></canvas><p id="glOut"></p></div>
+        <div class="controls">
+          <div class="ctl"><label for="glD">Distance to stop line</label><output id="glDo"></output><input type="range" id="glD" min="50" max="400" step="10" value="250"></div>
+          <div class="ctl"><label for="glV">Current speed</label><output id="glVo"></output><input type="range" id="glV" min="30" max="70" step="5" value="50"></div>
+          <div class="ctl"><label for="glTg">Time until green (from SPaT)</label><output id="glTgo"></output><input type="range" id="glTg" min="0" max="40" value="28"></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="its" data-short="Linkage: ITS">6 · Linkage 4: intelligent transport systems</h2>
+      <p>The agent is one part of a larger <b>ITS</b> chain. It needs sensing, communication, a safe controller in the street, and people in a control centre who set goals and can overrule it. Click each layer.</p>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Where the agent sits in ITS</h4></div>
+      <div class="bay-body">
+        <div class="seg" role="group" aria-label="ITS layers" style="flex-wrap:wrap">
+          <button type="button" data-its="users">Road users &amp; CAVs</button><button type="button" data-its="sense">Sensing</button><button type="button" data-its="comm">Communication (V2X)</button><button type="button" data-its="edge">Edge controller</button><button type="button" data-its="agent">Agentic layer</button><button type="button" data-its="tmc">Control centre</button>
+        </div>
+        <p id="itsBox" class="callout">Choose a layer.</p>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="cav" data-short="Linkage: AVs and CAVs">7 · Linkage 5: autonomous and connected vehicles</h2>
+      <p>A <b>connected vehicle (CV)</b> exchanges data with the infrastructure and other vehicles. An <b>automated vehicle (AV)</b> drives itself to some level (SAE levels 0 to 5). A <b>CAV</b> is both. For signal agents CAVs matter in three ways:</p>
+      <ul>
+        <li><b>New eyes:</b> CAVs report position and speed, so the agent can estimate queues without loops, if enough vehicles are connected.</li>
+        <li><b>New hands:</b> CAVs can follow speed advice (eco-driving) or even platoon through on green.</li>
+        <li><b>New responsibility:</b> mixed traffic (humans + CAVs) for decades means the agent must work at every penetration level.</li>
+      </ul>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>What can the agent see?</h4><span class="hint">Only blue cars are connected. The agent scales what it sees by the penetration rate.</span></div>
+      <div class="bay-body">
+        <canvas class="chart" id="cvCv" style="height:110px" aria-label="Queue with connected and ordinary cars"></canvas>
+        <p id="cvOut"></p>
+        <div class="controls" style="max-width:520px">
+          <div class="ctl"><label for="cvP">Connected-vehicle penetration</label><output id="cvPo"></output><input type="range" id="cvP" min="0" max="100" step="5" value="25"></div>
+          <div><button class="btn ghost" type="button" id="cvNew">New queue</button></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="safety" data-short="Guardrails and autonomy">8 · Guardrails and levels of autonomy</h2>
+      <p>Traffic signals are safety-critical. A sensible design gives the agent freedom only inside a box the engineer can certify:</p>
+      <table class="data">
+        <tr><th>Level</th><th>Who decides</th><th>Example</th></tr>
+        <tr><td>0 · Manual</td><td>Engineer</td><td>Fixed-time plans designed offline</td></tr>
+        <tr><td>1 · Advisory</td><td>Agent suggests, operator approves</td><td>Agent proposes new splits for tomorrow</td></tr>
+        <tr><td>2 · Supervised</td><td>Agent acts within limits, operator watches</td><td>Agent chooses keep/switch; shield + centre oversight</td></tr>
+        <tr><td>3 · Collaborative</td><td>Agents coordinate with each other</td><td>Corridor agents share platoon forecasts</td></tr>
+        <tr><td>4 · Autonomous</td><td>Agents set their own sub-goals</td><td>Network agents re-plan during an incident, logged for audit</td></tr>
+      </table>
+      <div class="callout">The <b>shield</b> is never optional: minimum green, maximum green, intergreen and pedestrian times are checked outside the agent, whatever kind of AI is inside.</div>
+    </section>
+
+    <section class="prose">
+      <h2 id="recap" data-short="Recap and memory route">9 · Recap and memory route</h2>
+      <ol>
+        <li>An agent loops <b>perceive → reason → act</b>, with tools, goals, memory and messages.</li>
+        <li>Adaptive signals change <b>cycle, split and offset</b>; we score them by delay, stops, longest wait and emissions.</li>
+        <li><b>Efficiency:</b> measure queues and pressure; avoid spill-back.</li>
+        <li><b>Coordination:</b> neighbours share forecasts to make green waves.</li>
+        <li><b>Eco-driving:</b> SPaT + GLOSA turn stops into glides, if the signal is predictable.</li>
+        <li><b>ITS:</b> sensing, V2X, edge controller, agent, control centre.</li>
+        <li><b>CAVs:</b> new eyes, new hands, mixed traffic for a long time.</li>
+        <li><b>Shield:</b> hard rules outside the agent; autonomy is granted in levels.</li>
+      </ol>
+      <p>Walk these eight ideas along the <a href="palace.html#go1">Go 1 memory route</a>, then try the questions below or the full <a href="quiz.html">question bank</a>.</p>
+    </section>
+
+    <section class="prose">
+      <h2 id="quiz" data-short="Check yourself">Check yourself</h2>
+      <div class="quiz" id="quizBox"></div>
+    </section>
+  </main>
+</div>
+<script src="js/common.js"></script>
+<script src="js/sim.js"></script>
+<script src="js/go1.js"></script>
+<script src="js/quizdata.js"></script>
+<script src="js/materials.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (window.QUIZ) Quiz(document.getElementById('quizBox'), QUIZ.filter(q => q.go === 1), 'go1'); });</script>
+</body>
+</html>

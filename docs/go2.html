@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Go 2 · Build in SUMO</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<div class="wrap layout">
+  <aside class="route" aria-label="On this page"><span class="level-name">Go 2</span><ol></ol></aside>
+  <main class="content">
+    <header class="level-head prose">
+      <span class="go-tag">Go 2 of 3 · hands-on</span>
+      <h1>Build signal agents in SUMO, step by step</h1>
+      <p class="lede">Six labs, each a short Python script that drives Eclipse SUMO through TraCI. You start with one agent at one junction and finish with talking agents, a learning agent, eco-driving connected vehicles, priority tools and a language-model agent behind a safety shield.</p>
+      <p class="materials-links" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><a class="btn" style="text-decoration:none" href="#materials" data-open="slides">View the lecture slides</a><a class="btn ghost" style="text-decoration:none" href="#materials" data-open="guide">Read the study guide</a></p>
+    </header>
+
+    <section class="prose" id="materials-sec">
+      <h2 id="materials" data-short="Lecture &amp; study guide">Lecture and study guide</h2>
+      <div class="mat-tabs" role="tablist" style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+        <button class="btn" type="button" role="tab" aria-selected="true" data-mode="slides" data-src="viewer.html?doc=materials/AATSC_Go2_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go2_Lecture.pptx&amp;embed=1">Lecture</button>
+        <button class="btn ghost" type="button" role="tab" aria-selected="false" data-mode="guide" data-src="viewer.html?doc=materials/AATSC_Go2_Study_Guide.pdf&amp;mode=guide&amp;embed=1">Study guide</button>
+        <a class="btn ghost" id="matFull" style="text-decoration:none" href="viewer.html?doc=materials/AATSC_Go2_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go2_Lecture.pptx" target="_blank" rel="noopener">Open in a new tab</a>
+        <a class="btn ghost" style="text-decoration:none" href="materials/AATSC_Go2_Study_Guide.pdf" download>Guide PDF</a>
+        <a class="btn ghost" style="text-decoration:none" href="materials/AATSC_Go2_Lecture.pptx" download>Slides .pptx</a>
+      </div>
+      <div id="matFrame" style="border:1px solid var(--line);border-radius:8px;overflow:hidden;aspect-ratio:16/10.6;width:100%;background:var(--sunk)">
+        <iframe id="matIframe" title="Go 2 lecture and study guide" src="viewer.html?doc=materials/AATSC_Go2_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go2_Lecture.pptx&amp;embed=1" loading="lazy" allowfullscreen style="width:100%;height:100%;border:0;display:block"></iframe>
+      </div>
+    </section>
+
+    <section class="prose">
+      <h2 id="setup" data-short="Set up">0 · Set up (10 minutes)</h2>
+      <div class="steps">
+        <div class="step"><b>Get the code.</b><pre><code>git clone https://github.com/smrahmanbd/agentic-atsc-lab.git
+cd agentic-atsc-lab/sumo</code></pre></div>
+        <div class="step"><b>Install SUMO and the Python packages.</b> SUMO itself comes from pip, so no separate download is needed (Windows, macOS, Linux; Python 3.9+).<pre><code>python -m pip install -r requirements.txt</code></pre></div>
+        <div class="step"><b>Check it works.</b> The tests run without SUMO; the first lab runs a one-hour simulation in under a minute.<pre><code>python -m pytest tests -q
+python go2/01_first_agent.py --gui      # watch in sumo-gui; press the green play button</code></pre></div>
+      </div>
+      <h3>How the code is organised</h3>
+<pre><code>sumo/agentic_atsc/
+  network.py      builds the test networks (1 junction, or a 4-junction corridor) and Poisson demand
+  junction.py     one signal: two stages (EW, NS), yellow 3 s, all-red 1 s, and the PERCEPTION TOOLS
+                  queue(), max_wait(), approaching(), downstream_occupancy(), pressure(),
+                  priority_requests(), cav_estimate()
+  controllers.py  FixedTime, Actuated, MaxPressure,
+                  AgenticController  (perceive → reason → act, goals, memory, messages, shield)
+                  QLearningAgent, LLMAgent (mock or real model, always behind the shield)
+  cav.py          GLOSA eco-driving advice for connected vehicles from SPaT
+  runner.py       runs SUMO, steps the controller every second, returns delay, stops, CO2, waits
+go2/  six labs          go3/  five research experiments          tests/  unit tests</code></pre>
+      <div class="callout">Every controller drives junctions only through <code>Junction.request(stage)</code>. Yellow, all-red and minimum green are the same for everyone, so comparisons are fair.</div>
+    </section>
+
+    <section class="prose">
+      <h2 id="lab1" data-short="Lab 1 · First agent">Lab 1 · Your first agent: perceive, reason, act</h2>
+      <div class="steps">
+        <div class="step"><b>Run it.</b><pre><code>python go2/01_first_agent.py</code></pre></div>
+        <div class="step"><b>Read the loop.</b> Every 2 s each agent calls its tools, scores both stages against its goals, writes a reason, and passes the choice through the shield:
+<pre><code>def step(self, t):
+    for jid, j in self.J.items():
+        obs = self.perceive(jid, t)          # tools: queues, waits, arrivals, exits, priority, messages
+        action, why = self.reason(obs)       # score(keep) vs score(switch) + plain-language reason
+        self.act(jid, t, action, why)        # SafetyShield.check(...) then Junction.request(...)
+
+def score(self, obs, s):                     # goals as weights
+    g = self.goals
+    sc = g.w_queue*obs[f"queue_{s}"] + g.w_wait*obs[f"wait_{s}"] + g.w_arrive*obs[f"arriving_{s}"]
+    if obs[f"priority_{s}"]: sc += g.w_priority
+    if obs[f"spill_{s}"] > 0.6: sc -= g.w_spill * (obs[f"spill_{s}"] - 0.6) / 0.4
+    return sc</code></pre></div>
+        <div class="step"><b>What we got</b> (one junction, one hour with a peak, seed 1):
+          <table class="data"><tr><th>Controller</th><th>Mean delay (s)</th><th>Longest wait (s)</th></tr>
+          <tr><td>Fixed time</td><td>14.1</td><td>36</td></tr><tr><td>Actuated</td><td>9.8</td><td>26</td></tr>
+          <tr><td>Max-pressure</td><td>15.0</td><td>301</td></tr><tr class="best"><td>Agentic</td><td>9.6</td><td>20</td></tr></table>
+          <p>Pure max-pressure starves the side street here (one car waited 301 s and was removed by SUMO): it has no notion of fairness. The agent's fairness weight and its 90 s cap fix that.</p></div>
+        <div class="step"><b>Try this.</b> Set <code>Goals(w_wait=0)</code>, rerun and compare the longest wait. Then raise <code>hysteresis</code> to 6 and count the switches.</div>
+      </div>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Decision inspector</h4><span class="hint">Real decisions from the Lab 1 run, peak hour</span></div>
+      <div class="bay-body">
+        <label style="font-weight:600"><input type="checkbox" id="diSw" checked> only show switches</label>
+        <div class="log" id="diList" style="height:220px;margin-top:8px"></div>
+      </div>
+    </div>
+    <figure class="figure"><img src="assets/results/go2_lab1_delay.png" alt="Lab 1 mean delay by controller" loading="lazy"><figcaption>Lab 1: mean delay per vehicle.</figcaption></figure>
+
+    <section class="prose">
+      <h2 id="lab2" data-short="Lab 2 · Many agents">Lab 2 · Many agents: coordination on a corridor</h2>
+      <div class="steps">
+        <div class="step"><b>Run it</b> (3 seeds, about 10 minutes).<pre><code>python go2/02_multi_agent.py --seeds 3</code></pre></div>
+        <div class="step"><b>Read the messages.</b> Each agent sees cars leave its own stop line long before the next junction can detect them, so it tells its neighbour how many are coming and when:
+<pre><code>def communicate(self, jid, t):
+    for d, nb in self.down[jid].items():          # downstream neighbour east and west
+        for v in vehicles_on_link(jid, nb):
+            eta = t + remaining_distance(v) / self.vt
+            ...
+        self.bus.send(Message(t, jid, nb, "platoon", {"eta": eta, "size": n}))</code></pre>
+          The receiver adds <code>w_platoon × size</code> to the EW score when the platoon is due within 12 s, so it holds or starts the green for it.</div>
+        <div class="step"><b>What we got</b> (mean of 3 seeds):
+          <table class="data"><tr><th>Controller</th><th>Delay (s)</th><th>Stops / veh</th><th>CO2 (g)</th></tr>
+          <tr><td>Fixed green wave</td><td>26.5</td><td>1.11</td><td>252</td></tr><tr class="best"><td>Actuated</td><td>17.5</td><td>0.89</td><td>229</td></tr>
+          <tr><td>Max-pressure</td><td>24.3</td><td>0.80</td><td>241</td></tr><tr><td>Agents, no talk</td><td>18.4</td><td>0.95</td><td>232</td></tr><tr><td>Agents, talking</td><td>18.2</td><td>0.88</td><td>229</td></tr></table>
+          <p>Talking cuts stops by 7 % and CO2 slightly, but well-tuned actuation still has the lowest delay on this short corridor. That is an honest result: coordination pays more on longer, denser networks, and is the starting point for Go 3.</p></div>
+        <div class="step"><b>Try this.</b> Raise <code>w_platoon</code> to 1.5, or make the corridor longer in <code>scenarios.py</code> (<code>n=6</code>).</div>
+      </div>
+    </section>
+    <div class="grid2"><figure class="figure"><img src="assets/results/go2_lab2_delay.png" alt="Lab 2 delay" loading="lazy"><figcaption>Lab 2: corridor delay.</figcaption></figure><figure class="figure"><img src="assets/results/go2_lab2_stops.png" alt="Lab 2 stops" loading="lazy"><figcaption>Lab 2: stops per vehicle.</figcaption></figure></div>
+
+    <section class="prose">
+      <h2 id="lab3" data-short="Lab 3 · Learning agent">Lab 3 · A learning agent: Q-learning</h2>
+      <div class="steps">
+        <div class="step"><b>Run it</b> (30 training episodes of 30 minutes, then a test hour).<pre><code>python go2/03_learning_agent.py --episodes 30</code></pre></div>
+        <div class="step"><b>Read the learner.</b> The state is the current stage, the two queues in bins of 3 cars and how long the green has run. Every 5 s it picks keep or switch and updates its table:
+<pre><code>r = -(j.queue("EW") + j.queue("NS"))                 # reward: fewer waiting cars is better
+q[prev_action] += alpha * (r + gamma * max(Q[state]) - q[prev_action])
+a = random_action() if random() &lt; epsilon else argmax(Q[state])</code></pre></div>
+        <div class="step"><b>What we got.</b> The learner found 31 distinct states and reached 11.7 s on the unseen test hour, against 9.8 s for actuated control and 9.6 s for the rule-based agent. Simple tabular learning works but needs more training, a richer state and reward shaping to beat good rules, which is why research uses deep RL with pressure-based states.</div>
+        <div class="step"><b>Try this.</b> Change the reward to pressure, or add the longest wait to the state.</div>
+      </div>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Training curve</h4><span class="hint">Mean delay per training episode (exploration falls from 30 % to 2 %)</span></div>
+      <div class="bay-body"><canvas class="chart" id="qlCv" aria-label="Q-learning training curve"></canvas></div>
+    </div>
+
+    <section class="prose">
+      <h2 id="lab4" data-short="Lab 4 · Eco-driving">Lab 4 · Eco-driving: signals talk to connected vehicles</h2>
+      <div class="steps">
+        <div class="step"><b>Run it.</b><pre><code>python go2/04_eco_driving.py</code></pre></div>
+        <div class="step"><b>Read the advice.</b> The controller publishes SPaT: which stage is green and, if known, the seconds until it changes. A connected car within 300 m picks a speed that reaches the line on green:
+<pre><code>green, remaining = controller.spat(jid, t)
+if green == my_stage and arrive_time &lt;= remaining: no advice
+elif other stage green and remaining known: t_next = remaining + yellow + all_red
+v = max(5 m/s, min(v_max, distance / t_next))     # glide instead of stop</code></pre>
+          A fixed plan always knows its remaining time. The adaptive agent only knows it once it <em>commits</em> to a change, here 8 s ahead (<code>AgenticController(commit_horizon=8)</code>).</div>
+        <div class="step"><b>What we got</b> (corridor, 0 to 100 % connected vehicles): <span id="l4Txt"></span>
+          <div id="l4Table"></div></div>
+        <div class="step"><b>Try this.</b> Change <code>commit_horizon</code> to 0 (no promise) or 16 in the script. Go 3 experiment R5 sweeps it.</div>
+      </div>
+    </section>
+    <div class="grid2"><figure class="figure"><img src="assets/results/go2_lab4_co2_g.png" alt="Lab 4 CO2" loading="lazy"><figcaption>Lab 4: CO2 per vehicle.</figcaption></figure><figure class="figure"><img src="assets/results/go2_lab4_stops.png" alt="Lab 4 stops" loading="lazy"><figcaption>Lab 4: stops per vehicle.</figcaption></figure></div>
+
+    <section class="prose">
+      <h2 id="lab5" data-short="Lab 5 · Priority tools">Lab 5 · Tools for priority: buses and ambulances</h2>
+      <div class="steps">
+        <div class="step"><b>Run it.</b><pre><code>python go2/05_priority.py</code></pre></div>
+        <div class="step"><b>Read the tool.</b> <code>Junction.priority_requests(stage)</code> lists buses and emergency vehicles within 200 m. The goal weight <code>w_priority = 25</code> outweighs any normal queue.</div>
+        <div class="step"><b>What we got</b> (corridor, a bus every 3 min, an ambulance every 5 min):
+          <table class="data"><tr><th>Controller</th><th>Bus delay (s)</th><th>Ambulance delay (s)</th><th>Everyone (s)</th></tr>
+          <tr><td>Actuated</td><td>33.4</td><td>17.3</td><td>17.8</td></tr><tr><td>Agent, priority off</td><td>29.1</td><td>17.8</td><td>18.2</td></tr><tr class="best"><td>Agent, priority tool</td><td>7.8</td><td>3.0</td><td>18.4</td></tr></table>
+          <p>Bus delay falls by about three-quarters and ambulances barely stop, at a cost of 0.2 s for everyone else.</p></div>
+      </div>
+    </section>
+    <div class="grid2"><figure class="figure"><img src="assets/results/go2_lab5_bus.png" alt="Lab 5 bus delay" loading="lazy"><figcaption>Lab 5: bus delay.</figcaption></figure><figure class="figure"><img src="assets/results/go2_lab5_ambulance.png" alt="Lab 5 ambulance delay" loading="lazy"><figcaption>Lab 5: ambulance delay.</figcaption></figure></div>
+
+    <section class="prose">
+      <h2 id="lab6" data-short="Lab 6 · LLM agent">Lab 6 · A language-model agent behind a safety shield</h2>
+      <div class="steps">
+        <div class="step"><b>Run it offline</b> (a mock model, repeatable), <b>or with a real model.</b><pre><code>python go2/06_llm_agent.py                       # mock LLM
+pip install anthropic; export ANTHROPIC_API_KEY=...
+python go2/06_llm_agent.py --backend anthropic --minutes 10</code></pre></div>
+        <div class="step"><b>Read the pipeline.</b> Observation → prompt → JSON answer → shield → signal. The mock model behaves like the rule agent but, with probability <code>hallucination</code>, gives the kinds of bad answers reported for LLM controllers: switching too early, never switching, inventing a stage, or holding all-red.</div>
+        <div class="step"><b>What we got</b> (one junction, one hour): actuated 9.8 s; reliable LLM agent 10.7 s; LLM giving 20 % bad answers <em>with</em> the shield 11.6 s: 165 bad answers, all caught. Go 3 experiment R2 shows what happens without the shield.</div>
+        <div class="step"><b>Try this</b> in the playground below: write your own model answer and see what the shield does.</div>
+      </div>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Prompt and shield playground</h4><span class="hint">The same rules as SafetyShield in controllers.py</span></div>
+      <div class="bay-body bay-split">
+        <div>
+          <div class="muted" style="font-size:.85rem">Prompt sent to the model</div>
+          <pre id="pgPrompt" style="white-space:pre-wrap;font-size:.8rem;margin-top:4px"></pre>
+          <label for="pgAns" style="font-weight:600;display:block;margin-top:10px">Model answer (JSON)</label>
+          <textarea id="pgAns" rows="3" style="width:100%;font:13px var(--mono);padding:6px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)">{"action": "switch", "reason": "NS has more cars waiting"}</textarea>
+          <div class="seg" id="pgPre" role="group" aria-label="Example answers" style="margin-top:6px;flex-wrap:wrap">
+            <button type="button" data-a='{"action": "switch", "reason": "NS has more cars waiting"}'>sensible</button>
+            <button type="button" data-a='{"action": "green_NE", "reason": "serve the northeast stage"}'>invented stage</button>
+            <button type="button" data-a='{"action": "keep", "reason": "the current stage looks busy"}'>never switches</button>
+            <button type="button" data-a='Sure! I think switching is best.'>not JSON</button>
+          </div>
+          <p id="pgOut" class="callout"></p>
+        </div>
+        <div class="controls">
+          <div class="ctl"><label for="pgStage">Current green</label><select id="pgStage" style="grid-column:1/-1"><option>EW</option><option>NS</option></select></div>
+          <div class="ctl"><label for="pgG">Green has run (s)</label><input type="number" id="pgG" value="5" min="0" max="120" style="grid-column:1/-1"></div>
+          <div class="ctl"><label for="pgQE">Queue EW</label><input type="number" id="pgQE" value="3" min="0" style="grid-column:1/-1"></div>
+          <div class="ctl"><label for="pgQN">Queue NS</label><input type="number" id="pgQN" value="9" min="0" style="grid-column:1/-1"></div>
+          <div class="ctl"><label for="pgWE">Longest wait EW (s)</label><input type="number" id="pgWE" value="0" min="0" style="grid-column:1/-1"></div>
+          <div class="ctl"><label for="pgWN">Longest wait NS (s)</label><input type="number" id="pgWN" value="40" min="0" style="grid-column:1/-1"></div>
+          <div class="ctl"><label for="pgCap">Fairness cap (s)</label><input type="number" id="pgCap" value="90" min="10" style="grid-column:1/-1"></div>
+          <div><button class="btn" type="button" id="pgGo">Check</button></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2 id="recap" data-short="Recap and memory route">Recap</h2>
+      <ol>
+        <li>Set up: <code>pip install -r requirements.txt</code>; all controllers share one <code>Junction</code> with the same safety timings.</li>
+        <li>Lab 1: the perceive-reason-act loop with goals as weights beats fixed time and matches actuation, with the shortest longest-wait.</li>
+        <li>Lab 2: neighbours exchange platoon forecasts; fewer stops, but actuation still wins on delay on a short corridor.</li>
+        <li>Lab 3: tabular Q-learning learns, but not yet as well as good rules.</li>
+        <li>Lab 4: SPaT + GLOSA turns stops into glides; predictability matters.</li>
+        <li>Lab 5: a priority tool cuts bus and ambulance delay sharply for a tiny general cost.</li>
+        <li>Lab 6: an LLM agent is only safe behind a shield that checks every answer.</li>
+      </ol>
+      <p>Walk them on the <a href="palace.html#go2">Go 2 memory route</a>.</p>
+    </section>
+
+    <section class="prose">
+      <h2 id="quiz" data-short="Check yourself">Check yourself</h2>
+      <div class="quiz" id="quizBox"></div>
+    </section>
+  </main>
+</div>
+<script src="js/common.js"></script>
+<script src="js/results.js"></script>
+<script src="js/go2.js"></script>
+<script src="js/quizdata.js"></script>
+<script src="js/materials.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (window.QUIZ) Quiz(document.getElementById('quizBox'), QUIZ.filter(q => q.go === 2), 'go2'); });</script>
+</body>
+</html>

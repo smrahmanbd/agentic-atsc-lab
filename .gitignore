@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+sumo/results/nets/
+sumo/results/**/tripinfo_*.xml
+sumo/results/logs/
+.pytest_cache/
