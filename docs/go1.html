@@ -16,7 +16,7 @@
     <header class="level-head prose">
       <span class="go-tag">Go 1 of 3 · beginner friendly</span>
       <h1>Agents that run traffic lights</h1>
-      <p class="lede">What an AI <em>agent</em> is, how an adaptive traffic signal works, and how the two fit together to make traffic more efficient, coordinated, greener and ready for connected and automated vehicles. No maths beyond arithmetic; every idea has something to try.</p>
+      <p class="lede">What an AI <em>agent</em> is, what changes when its brain is a large language model, how an adaptive traffic signal works, and how the two fit together to make traffic more efficient, coordinated, greener and ready for connected and automated vehicles. No maths beyond arithmetic; every idea has something to try.</p>
       <p class="materials-links" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><a class="btn" style="text-decoration:none" href="#materials" data-open="slides">View the lecture slides</a><a class="btn ghost" style="text-decoration:none" href="#materials" data-open="guide">Read the study guide</a></p>
     </header>
 
@@ -34,6 +34,25 @@
         <iframe id="matIframe" title="Go 1 lecture and study guide" src="viewer.html?doc=materials/AATSC_Go1_Lecture.pdf&amp;mode=slides&amp;dl=materials/AATSC_Go1_Lecture.pptx&amp;embed=1" loading="lazy" allowfullscreen style="width:100%;height:100%;border:0;display:block"></iframe>
       </div>
     </section>
+
+    <section class="prose">
+      <h2 id="start" data-short="Start here">0 · Start here: a story in one junction</h2>
+      <p>Picture a busy crossroads at 8 a.m. The signal is broken, so a <b>traffic officer</b> steps into the middle. She <em>looks</em> down each road, <em>thinks</em> about which queue is longest and who has waited too long, <em>waves</em> one direction through, <em>remembers</em> that the bus lane always fills at 8:15, and <em>radios</em> her colleague at the next junction: "a big group is coming your way". She also follows <em>rules she will never break</em>: she never sends two crossing streams at once.</p>
+      <p>That officer is a perfect picture of an <b>agent</b>. This course asks: can software do her job, at every junction, all day, and do it safely? Go 1 answers three questions in plain language:</p>
+      <ol>
+        <li><b>What is an AI agent</b>, and what changes when its "brain" is a large language model (LLM) like the ones behind chat assistants?</li>
+        <li><b>How does an adaptive traffic signal work</b>, and why is it a natural home for an agent?</li>
+        <li><b>How do the two link</b> to the big goals of traffic engineering: efficiency, coordination, eco-driving, intelligent transport systems (ITS) and connected and automated vehicles (CAVs)?</li>
+      </ol>
+      <div class="callout"><b>How to use this page.</b> Read a section (5 minutes), then play with the box below it until the "try this" hint makes sense. No maths beyond arithmetic. If a word is new, flip its card below. At the end, walk the <a href="palace.html#go1">memory route</a> and try the <a href="quiz.html">question bank</a>.</div>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Words you will meet</h4><span class="hint">Tap a card to flip it: plain meaning on the front, traffic example on the back</span></div>
+      <div class="bay-body">
+        <div class="seg" role="group" aria-label="Card group" id="fcSets"><button type="button" data-g="agent" aria-pressed="true">Agents</button><button type="button" data-g="llm">LLMs</button><button type="button" data-g="signal">Signals</button><button type="button" data-g="vehicle">Vehicles &amp; ITS</button></div>
+        <div class="flipgrid" id="fcGrid"></div>
+      </div>
+    </div>
 
     <section class="prose">
       <h2 id="agent" data-short="What an agent is">1 · What "agentic AI" means</h2>
@@ -85,7 +104,147 @@
     </div>
 
     <section class="prose">
-      <h2 id="atsc" data-short="How ATSC works">2 · How an adaptive traffic signal works</h2>
+      <h3 id="properties">Four properties of an agent</h3>
+      <p>Computer scientists Michael Wooldridge and Nicholas Jennings (1995) gave a definition that still works well. Software is an agent when it has these four properties:</p>
+      <table class="data">
+        <tr><th>Property</th><th>Plain meaning</th><th>At a junction</th></tr>
+        <tr><td><b>Autonomy</b></td><td>Acts without a person approving every step</td><td>Decides keep or switch every 2 s on its own</td></tr>
+        <tr><td><b>Reactivity</b></td><td>Notices changes and responds in time</td><td>A queue builds on the side road, so it shortens the main green</td></tr>
+        <tr><td><b>Proactiveness</b></td><td>Pursues goals, not only reacting</td><td>Starts the green early because a platoon is forecast to arrive</td></tr>
+        <tr><td><b>Social ability</b></td><td>Communicates and cooperates with others</td><td>Tells the next junction "8 cars in 15 s"; reads bus priority requests</td></tr>
+      </table>
+      <p><b>Agentic AI</b> is the newer word for systems that have a lot of all four: they take multi-step actions, use tools, keep goals over time and work with other agents and people. It is a <em>spectrum</em>, not a yes/no label.</p>
+
+      <h3 id="kinds">Five kinds of agent, from simple to smart</h3>
+      <p>The standard AI textbook (Russell and Norvig) sorts agents into five kinds. Each rung adds one ability. Click a rung to see it at a junction.</p>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>The agent ladder</h4><span class="hint">Each rung adds one ability to the rung below</span></div>
+      <div class="bay-body bay-split">
+        <div class="ladder" id="ladder" role="group" aria-label="Kinds of agent"></div>
+        <div id="ladderBox" class="callout" style="margin-top:0">Choose a rung.</div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h3 id="sorter">Is it an agent?</h3>
+      <p>Test your feel for the spectrum. For each system, choose where it sits; the explanation appears straight away.</p>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Sort the systems</h4><span class="hint" id="sortScore">0 of 8 sorted</span></div>
+      <div class="bay-body"><div id="sortBox" class="sorter"></div></div>
+    </div>
+
+    <section class="prose">
+      <h2 id="llm" data-short="LLM-based agents">2 · LLM-based agents: when the brain is a language model</h2>
+      <p>Since 2023 the most talked-about agents use a <b>large language model (LLM)</b> as their reasoning core, the same kind of model behind chat assistants. To understand what they can and cannot do at a traffic signal, we build them up in five small steps.</p>
+
+      <h3 id="llm-what">Step 1 · What an LLM actually does</h3>
+      <p>An LLM is, at heart, a <b>very well-read autocomplete</b>. It was trained on a huge amount of text to do one thing: given the text so far, predict the next piece of text, called a <b>token</b> (roughly three-quarters of a word). It writes a whole answer by predicting one token, adding it, and predicting again.</p>
+      <ul>
+        <li>Everything it can "see" right now (instructions, data, earlier messages) must fit in its <b>context window</b>: its working memory for this conversation.</li>
+        <li>It does not look anything up unless we give it a <b>tool</b> to do so. Its knowledge stops at its training date.</li>
+        <li>It picks among likely tokens with some randomness, set by the <b>temperature</b>. The same question can give different answers.</li>
+        <li>When it does not know, it can still produce a fluent, confident guess. That is a <b>hallucination</b>. At a traffic signal a fluent guess is dangerous, which is why the shield exists.</li>
+      </ul>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Inside the autocomplete</h4><span class="hint">Illustrative scores for the next word; real models choose from about 100 000 tokens</span></div>
+      <div class="bay-body bay-split">
+        <div>
+          <p class="num" style="margin-top:0;background:var(--code-bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:.92rem">"The side road has been red for 95 s and 14 cars are waiting, so the signal should <b>___</b>"</p>
+          <div id="nwBars"></div>
+          <p id="nwOut" class="muted" style="font-size:.92rem"></p>
+        </div>
+        <div class="controls">
+          <div class="ctl"><label for="nwT">Temperature (randomness)</label><output id="nwTo"></output><input type="range" id="nwT" min="0.1" max="2" step="0.1" value="0.7"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="nwGo">Sample 20 answers</button></div>
+          <p class="muted" style="font-size:.9rem;margin:0">Low temperature: nearly always the top word. High temperature: more variety, including silly words. For control we want low temperature <em>and</em> a check on every answer.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h3 id="llm-anatomy">Step 2 · From chatbot to agent</h3>
+      <p>A chatbot answers once and stops. An <b>LLM agent</b> wraps the model in a loop and gives it ways to act:</p>
+      <div class="formula wrap-ok">LLM agent = LLM (reasoning) + instructions (role and goals) + tools + memory + a loop + guardrails</div>
+      <dl class="defs">
+        <dt>Instructions</dt><dd>A <em>system prompt</em> that sets the role and goals: "You control one junction. Minimise delay; nobody waits more than 90 s; buses and ambulances first."</dd>
+        <dt>Tools</dt><dd>Functions described to the model in a fixed format (a <em>JSON schema</em>). The model replies with a request like <code>{"tool": "queue", "args": {"approach": "NS"}}</code>; ordinary code runs it and returns the result. This is called <b>function calling</b>. The Model Context Protocol (MCP, 2024) is one open standard for plugging tools into models.</dd>
+        <dt>Short-term memory</dt><dd>What is in the context window now: the last few observations and decisions.</dd>
+        <dt>Long-term memory</dt><dd>A store the agent can search, e.g. past incidents or the signal timing manual. Fetching relevant pages into the prompt is called <b>retrieval-augmented generation (RAG)</b>.</dd>
+        <dt>Planning</dt><dd>Breaking a goal into steps before acting ("first check priority requests, then queues, then decide").</dd>
+        <dt>Guardrails</dt><dd>Checks outside the model: the reply must be valid JSON, the action must be on an allowed list, and the safety shield must pass it.</dd>
+      </dl>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Build an agent</h4><span class="hint">Switch parts on and see which jobs it can now do safely</span></div>
+      <div class="bay-body bay-split">
+        <div class="controls" id="bldParts"></div>
+        <div><div id="bldOut"></div><p id="bldSum" class="num" style="margin-top:8px"></p></div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h3 id="llm-react">Step 3 · Think, act, observe: the ReAct loop</h3>
+      <p>The most common way to run an LLM agent is <b>ReAct</b> (Yao et al., 2023): the model alternates a short <b>Thought</b> ("what do I need to know?"), an <b>Action</b> (a tool call) and an <b>Observation</b> (the tool's answer), until it gives a final answer. Then the guardrails check it before anything happens in the street. Step through four situations; the last two show what goes wrong and how the design catches it.</p>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Watch an LLM agent think</h4><span class="hint">Purple = thought, blue = tool call, grey = observation, green = answer, red = guardrail</span></div>
+      <div class="bay-body">
+        <div class="seg" role="group" aria-label="Scenario" id="rxSets"><button type="button" data-s="amb" aria-pressed="true">Ambulance</button><button type="button" data-s="fault">Broken detector</button><button type="button" data-s="hall">Hallucination</button><button type="button" data-s="inj">Prompt injection</button></div>
+        <p id="rxIntro" style="margin:.6rem 0"></p>
+        <div class="trace" id="rxTrace"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="btn" type="button" id="rxNext">Next step</button><button class="btn ghost" type="button" id="rxAll">Show all</button><button class="btn ghost" type="button" id="rxReset">Start again</button></div>
+        <p id="rxLesson" class="callout" hidden></p>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h3 id="llm-patterns">Step 4 · Common designs (patterns)</h3>
+      <p>Not every job needs a free-running agent. A useful rule from practice: <b>use the simplest design that works</b>, and add autonomy only when the task truly needs it.</p>
+      <div class="tablewrap"><table class="data">
+        <tr><th>Pattern</th><th>How it works</th><th>Traffic example</th></tr>
+        <tr><td><b>Single call</b></td><td>One prompt, one answer, no tools</td><td>"Explain this timing plan to a councillor in plain words"</td></tr>
+        <tr><td><b>Prompt chain</b></td><td>Fixed steps, each LLM call feeds the next</td><td>Summarise yesterday's detector log → list anomalies → draft the morning report</td></tr>
+        <tr><td><b>Router</b></td><td>The LLM sorts a request and sends it to the right handler</td><td>A citizen complaint goes to "signal timing", "faulty lamp" or "not ours"</td></tr>
+        <tr><td><b>ReAct tool loop</b></td><td>Think, call a tool, observe, repeat</td><td>Diagnose why queues grew on Main St using detector and incident tools</td></tr>
+        <tr><td><b>Plan and execute</b></td><td>Write a plan first, then carry out each step</td><td>Prepare signal plans for a stadium event: list junctions, simulate, compare</td></tr>
+        <tr><td><b>Reflection</b></td><td>The agent critiques its own result and tries again (Reflexion, Shinn et al., 2023)</td><td>After a simulated run shows long side-road waits, it revises its plan</td></tr>
+        <tr><td><b>Orchestrator and workers</b></td><td>A lead agent splits the job among specialist agents</td><td>One agent per junction, a corridor agent assigning targets</td></tr>
+        <tr><td><b>Human approval</b></td><td>The agent proposes; a person approves before it acts</td><td>New plan for tomorrow is applied only after the operator clicks "approve"</td></tr>
+      </table></div>
+
+      <h3 id="llm-speed">Step 5 · Fast and slow: where an LLM belongs</h3>
+      <p>Signals work on several clocks at once. Hardware conflict monitors react in <b>milliseconds</b>; keep-or-switch choices come every <b>1–2 seconds</b>; plans change over <b>minutes</b>; strategy over <b>hours</b>. A large LLM call takes from under a second to several seconds, costs money and can fail. So most designs give the LLM the <em>slow, thoughtful</em> jobs and leave the fast loop to rules or a learned policy. Slide the response time and see why.</p>
+    </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Is the LLM fast enough?</h4><span class="hint">Main road 900 veh/h, decisions every 2 s</span></div>
+      <div class="bay-body bay-split">
+        <div><div id="spLadder" class="speedladder"></div><p id="spOut"></p></div>
+        <div class="controls">
+          <div class="ctl"><label for="spL">LLM response time</label><output id="spLo"></output><input type="range" id="spL" min="0.2" max="12" step="0.2" value="3"></div>
+          <div class="ctl"><label for="spF">Chance an answer is unusable (bad format or unsafe)</label><output id="spFo"></output><input type="range" id="spF" min="0" max="30" step="1" value="5"></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h3 id="llm-traffic">LLM agents in traffic signal research so far</h3>
+      <p>Research groups have tried LLMs in four roles. Go 3 looks at the gaps; here is the map:</p>
+      <div class="grid2" id="llmCards"></div>
+      <div class="tablewrap"><table class="data" style="margin-top:1rem">
+        <tr><th>LLMs are good at</th><th>LLMs are weak at</th></tr>
+        <tr><td>Reading messy, mixed information (incident text, sensor faults, events)</td><td>Fast, repeated decisions (seconds matter at a signal)</td></tr>
+        <tr><td>Common-sense handling of rare cases they were never trained on</td><td>Exact arithmetic and keeping numbers straight</td></tr>
+        <tr><td>Explaining a decision in plain words to operators and the public</td><td>Giving the same answer twice (non-determinism)</td></tr>
+        <tr><td>Using tools: simulators, databases, timing manuals</td><td>Resisting instructions hidden in data (prompt injection)</td></tr>
+      </table></div>
+      <div class="callout"><b>The big idea for Go 1:</b> an LLM is a powerful <em>advisor and planner</em>, not a replacement for the safety system. The fast loop stays simple and certified; the LLM works above it, and everything it proposes goes through the shield.</div>
+    </section>
+
+    <section class="prose">
+      <h2 id="atsc" data-short="How ATSC works">3 · How an adaptive traffic signal works</h2>
       <p>A signal shares one piece of road between conflicting streams by giving each <b>stage</b> a turn. One round of all stages is a <b>cycle</b>; how the cycle is shared is the <b>split</b>; when a junction's cycle starts relative to its neighbour is the <b>offset</b>. Between greens comes the <b>intergreen</b> (yellow + all-red), which is lost time.</p>
       <dl class="defs">
         <dt>Fixed time</dt><dd>A stored plan, the same every cycle. Cheap and predictable, but blind to today's traffic.</dd>
@@ -95,7 +254,21 @@
         <dt>Agentic</dt><dd>Adaptive control framed as an agent: tools, goals, memory, communication, explanations and a shield. It can use any of the above as tools.</dd>
       </dl>
       <p>We judge controllers by <b>delay</b> (extra time compared with free flow), <b>stops</b>, <b>queue length</b>, the <b>longest wait</b> (fairness) and <b>emissions</b>.</p>
+      <h3 id="signal101">Signal 101: how much traffic can a green carry?</h3>
+      <p>One lane of queued cars leaves the stop line at about <b>1800 vehicles per hour of green</b> (one car every 2 s), the <b>saturation flow</b>. If a road gets green for a share g/C of the cycle, its <b>capacity</b> is 1800 × g/C. Dividing demand by capacity gives the <b>degree of saturation</b> x: below about 0.9 traffic clears each cycle; near or above 1 queues grow without limit. An adaptive system, or an agent, is constantly re-sharing the cycle to keep x low on every approach.</p>
     </section>
+    <div class="bay">
+      <div class="bay-head"><h4>Share the cycle</h4><span class="hint">One lane per approach, 2 changes per cycle, 4 s lost at each change</span></div>
+      <div class="bay-body bay-split">
+        <div><div id="s1Bar" class="cyclebar"></div><div id="s1Out"></div></div>
+        <div class="controls">
+          <div class="ctl"><label for="s1C">Cycle length C</label><output id="s1Co"></output><input type="range" id="s1C" min="40" max="150" step="5" value="80"></div>
+          <div class="ctl"><label for="s1S">Share of green to the main road</label><output id="s1So"></output><input type="range" id="s1S" min="10" max="90" step="1" value="60"></div>
+          <div class="ctl"><label for="s1E">Main road demand</label><output id="s1Eo"></output><input type="range" id="s1E" min="100" max="1200" step="50" value="700"></div>
+          <div class="ctl"><label for="s1N">Side road demand</label><output id="s1No"></output><input type="range" id="s1N" min="50" max="900" step="50" value="350"></div>
+        </div>
+      </div>
+    </div>
     <div class="bay">
       <div class="bay-head"><h4>Race the controllers</h4><span class="hint">Three random hours each, same arrivals for everyone</span></div>
       <div class="bay-body bay-split">
@@ -109,7 +282,7 @@
     </div>
 
     <section class="prose">
-      <h2 id="efficiency" data-short="Linkage: efficiency">3 · Linkage 1: efficiency</h2>
+      <h2 id="efficiency" data-short="Linkage: efficiency">4 · Linkage 1: efficiency</h2>
       <p>Efficiency means moving the most people with the least delay. An agent gets there by <em>measuring</em> instead of guessing: queues, arrivals and how full the exits are. One powerful signal is <b>pressure</b>: cars waiting to enter minus cars already on the exit. Serving the highest pressure keeps the network flowing and, importantly, avoids pushing cars into a road that is already full (spill-back).</p>
     </section>
     <div class="bay">
@@ -126,7 +299,7 @@
     </div>
 
     <section class="prose">
-      <h2 id="coordination" data-short="Linkage: coordination">4 · Linkage 2: coordination</h2>
+      <h2 id="coordination" data-short="Linkage: coordination">5 · Linkage 2: coordination</h2>
       <p>Junctions close together should not act alone. If each upstream green is timed so that its platoon reaches the next junction on green, traffic rides a <b>green wave</b>. Classic systems set offsets centrally. Agents can instead <b>talk</b>: the upstream agent tells its neighbour "about 8 cars will reach you in 15 s", and the neighbour holds or starts its green for them. In our SUMO corridor this messaging is Lab 2 of Go 2.</p>
     </section>
     <div class="bay">
@@ -142,7 +315,7 @@
     </div>
 
     <section class="prose">
-      <h2 id="eco" data-short="Linkage: eco-driving">5 · Linkage 3: eco-driving</h2>
+      <h2 id="eco" data-short="Linkage: eco-driving">6 · Linkage 3: eco-driving</h2>
       <p>Every stop costs fuel: braking wastes energy and accelerating from rest burns more. If the signal tells approaching cars <em>when</em> it will turn green, a connected car can slow down early and glide through instead of stopping. This is <b>GLOSA</b>, Green Light Optimal Speed Advisory, using <b>SPaT</b> (Signal Phase and Timing) messages. There is a catch for adaptive control: an agent that keeps changing its mind cannot promise a time. Go 3 measures this trade-off between adaptivity and predictability.</p>
     </section>
     <div class="bay">
@@ -158,7 +331,7 @@
     </div>
 
     <section class="prose">
-      <h2 id="its" data-short="Linkage: ITS">6 · Linkage 4: intelligent transport systems</h2>
+      <h2 id="its" data-short="Linkage: ITS">7 · Linkage 4: intelligent transport systems</h2>
       <p>The agent is one part of a larger <b>ITS</b> chain. It needs sensing, communication, a safe controller in the street, and people in a control centre who set goals and can overrule it. Click each layer.</p>
     </section>
     <div class="bay">
@@ -172,7 +345,7 @@
     </div>
 
     <section class="prose">
-      <h2 id="cav" data-short="Linkage: AVs and CAVs">7 · Linkage 5: autonomous and connected vehicles</h2>
+      <h2 id="cav" data-short="Linkage: AVs and CAVs">8 · Linkage 5: autonomous and connected vehicles</h2>
       <p>A <b>connected vehicle (CV)</b> exchanges data with the infrastructure and other vehicles. An <b>automated vehicle (AV)</b> drives itself to some level (SAE levels 0 to 5). A <b>CAV</b> is both. For signal agents CAVs matter in three ways:</p>
       <ul>
         <li><b>New eyes:</b> CAVs report position and speed, so the agent can estimate queues without loops, if enough vehicles are connected.</li>
@@ -193,7 +366,7 @@
     </div>
 
     <section class="prose">
-      <h2 id="safety" data-short="Guardrails and autonomy">8 · Guardrails and levels of autonomy</h2>
+      <h2 id="safety" data-short="Guardrails and autonomy">9 · Guardrails and levels of autonomy</h2>
       <p>Traffic signals are safety-critical. A sensible design gives the agent freedom only inside a box the engineer can certify:</p>
       <table class="data">
         <tr><th>Level</th><th>Who decides</th><th>Example</th></tr>
@@ -204,25 +377,51 @@
         <tr><td>4 · Autonomous</td><td>Agents set their own sub-goals</td><td>Network agents re-plan during an incident, logged for audit</td></tr>
       </table>
       <div class="callout">The <b>shield</b> is never optional: minimum green, maximum green, intergreen and pedestrian times are checked outside the agent, whatever kind of AI is inside.</div>
+      <h3 id="llm-guard">Extra guardrails when the brain is an LLM</h3>
+      <ol>
+        <li><b>Strict output format:</b> only replies that parse as the expected JSON are used; anything else counts as "no change".</li>
+        <li><b>Allowed actions only:</b> the agent can choose from a short list (keep, switch, request plan change), never free-form commands.</li>
+        <li><b>Data is not instructions:</b> messages, sensor text and web pages are wrapped and labelled as data, so text like "ignore your rules" inside them is not obeyed.</li>
+        <li><b>Check facts against tools:</b> if the reason quotes a queue of 40 but the tool said 4, the answer is rejected.</li>
+        <li><b>Safe fallback:</b> if the LLM is slow, offline or keeps failing, the junction runs its normal actuated or fixed plan.</li>
+        <li><b>Log everything:</b> every prompt, tool call, answer and shield decision is stored, so engineers can audit and improve the agent.</li>
+      </ol>
     </section>
 
     <section class="prose">
-      <h2 id="recap" data-short="Recap and memory route">9 · Recap and memory route</h2>
+      <h2 id="recap" data-short="Recap and memory route">10 · Recap and memory route</h2>
       <ol>
-        <li>An agent loops <b>perceive → reason → act</b>, with tools, goals, memory and messages.</li>
-        <li>Adaptive signals change <b>cycle, split and offset</b>; we score them by delay, stops, longest wait and emissions.</li>
+        <li>An agent loops <b>perceive → reason → act</b>, with tools, goals, memory and messages; it shows <b>autonomy, reactivity, proactiveness and social ability</b>, and comes in five kinds from simple reflex to learning.</li>
+        <li>An <b>LLM</b> predicts the next token; an <b>LLM agent</b> adds instructions, tools, memory, a ReAct loop and guardrails. It is slow and can hallucinate, so it plans and advises <em>above</em> a fast, certified loop.</li>
+        <li>Adaptive signals change <b>cycle, split and offset</b>; capacity is 1800 × g/C per lane; we score them by delay, stops, longest wait and emissions.</li>
         <li><b>Efficiency:</b> measure queues and pressure; avoid spill-back.</li>
         <li><b>Coordination:</b> neighbours share forecasts to make green waves.</li>
         <li><b>Eco-driving:</b> SPaT + GLOSA turn stops into glides, if the signal is predictable.</li>
         <li><b>ITS:</b> sensing, V2X, edge controller, agent, control centre.</li>
         <li><b>CAVs:</b> new eyes, new hands, mixed traffic for a long time.</li>
-        <li><b>Shield:</b> hard rules outside the agent; autonomy is granted in levels.</li>
+        <li><b>Shield:</b> hard rules outside the agent; autonomy is granted in levels; LLMs get extra guardrails.</li>
       </ol>
-      <p>Walk these eight ideas along the <a href="palace.html#go1">Go 1 memory route</a>, then try the questions below or the full <a href="quiz.html">question bank</a>.</p>
+      <p>Walk these ideas along the <a href="palace.html#go1">Go 1 memory route</a>, then try the questions below or the full <a href="quiz.html">question bank</a>.</p>
+    </section>
+
+    <section class="prose">
+      <h2 id="reading" data-short="Further reading">Further reading</h2>
+      <ul class="reflist">
+        <li>Wooldridge, M. and Jennings, N. R. (1995). Intelligent agents: theory and practice. <i>The Knowledge Engineering Review</i>, 10(2), 115–152. <a href="https://doi.org/10.1017/S0269888900008122">doi</a></li>
+        <li>Russell, S. and Norvig, P. (2020). <i>Artificial Intelligence: A Modern Approach</i>, 4th ed., ch. 2 "Intelligent Agents". Pearson.</li>
+        <li>Wei, J. et al. (2022). Chain-of-thought prompting elicits reasoning in large language models. <i>NeurIPS</i>. <a href="https://arxiv.org/abs/2201.11903">arXiv</a></li>
+        <li>Yao, S. et al. (2023). ReAct: synergizing reasoning and acting in language models. <i>ICLR</i>. <a href="https://arxiv.org/abs/2210.03629">arXiv</a></li>
+        <li>Shinn, N. et al. (2023). Reflexion: language agents with verbal reinforcement learning. <i>NeurIPS</i>. <a href="https://arxiv.org/abs/2303.11366">arXiv</a></li>
+        <li>Wang, L. et al. (2024). A survey on large language model based autonomous agents. <i>Frontiers of Computer Science</i>, 18. <a href="https://arxiv.org/abs/2308.11432">arXiv</a></li>
+        <li>Greshake, K. et al. (2023). Not what you've signed up for: compromising real-world LLM-integrated applications with indirect prompt injection. <i>AISec</i>. <a href="https://arxiv.org/abs/2302.12173">arXiv</a></li>
+        <li>Anthropic (2024). Building effective agents. <a href="https://www.anthropic.com/research/building-effective-agents">web</a> · Model Context Protocol. <a href="https://modelcontextprotocol.io">web</a></li>
+        <li>Traffic-specific LLM work (LLMLight, LA-Light, iLLM-TSC, Open-TI, TrafficGPT, CoLLMLight, VLMLight) is in the <a href="go3.html#refs">Go 3 reference browser</a>.</li>
+      </ul>
     </section>
 
     <section class="prose">
       <h2 id="quiz" data-short="Check yourself">Check yourself</h2>
+      <p>Questions on this Go below. For 50 more on agentic AI and LLM agents, open the <a href="quiz.html#agents">Agentic AI &amp; LLM bank</a>.</p>
       <div class="quiz" id="quizBox"></div>
     </section>
   </main>
@@ -230,6 +429,7 @@
 <script src="js/common.js"></script>
 <script src="js/sim.js"></script>
 <script src="js/go1.js"></script>
+<script src="js/go1-agents.js"></script>
 <script src="js/quizdata.js"></script>
 <script src="js/materials.js"></script>
 <script>document.addEventListener('DOMContentLoaded', () => { if (window.QUIZ) Quiz(document.getElementById('quizBox'), QUIZ.filter(q => q.go === 1), 'go1'); });</script>

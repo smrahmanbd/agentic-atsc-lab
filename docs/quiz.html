@@ -19,13 +19,14 @@
 <main class="wrap">
   <header class="level-head prose">
     <h1>Question bank</h1>
-    <p class="lede">Every question in the course, with explanations. Practise one Go at a time, sit a mixed 20-question exam, or browse the whole bank with answers for revision. Your best score per set is remembered in this browser.</p>
+    <p class="lede">Every question in the course, with explanations. Practise one Go at a time, take the 50-question bank on agentic AI and LLM agents, sit a mixed 20-question exam, or browse the whole bank with answers for revision. Your best score per set is remembered in this browser.</p>
   </header>
   <div class="prose">
     <div class="seg" role="group" aria-label="Question set" id="sets" style="margin-top:1.4rem;flex-wrap:wrap">
       <button type="button" data-s="1" aria-pressed="true">Go 1 · principles</button>
       <button type="button" data-s="2">Go 2 · SUMO</button>
       <button type="button" data-s="3">Go 3 · research</button>
+      <button type="button" data-s="A">Agentic AI &amp; LLM agents (50)</button>
       <button type="button" data-s="mixed">Mixed exam (20)</button>
       <button type="button" data-s="browse">Browse all with answers</button>
     </div>
@@ -34,23 +35,26 @@
   </div>
 </main>
 <script src="js/quizdata.js"></script>
+<script src="js/quizdata-agents.js"></script>
 <script src="js/common.js"></script>
 <script>
   const el = document.getElementById('qz'), bank = document.getElementById('bank');
   function load(s) {
     bank.hidden = s !== 'browse'; el.hidden = s === 'browse';
     if (s === 'browse') {
-      bank.innerHTML = [1, 2, 3].map(g => `<h2>Go ${g}</h2>` + QUIZ.filter(q => q.go === g).map((q, i) =>
+      const ALL = QUIZ.concat(window.QUIZ_AGENTS || []);
+      bank.innerHTML = [1, 2, 3, 'A'].map(g => `<h2>${g === 'A' ? 'Agentic AI &amp; LLM agents' : 'Go ' + g}</h2>` + ALL.filter(q => q.go === g).map((q, i) =>
         `<details><summary>${i + 1}. ${q.q} <span class="chip">${q.topic || ''}</span></summary><ol type="A">${q.o.map((o, k) => `<li class="${k === q.a ? 'ok' : ''}">${o}</li>`).join('')}</ol><p>${q.e}</p></details>`).join('')).join('');
       return;
     }
-    const qs = s === 'mixed' ? [...QUIZ].sort(() => Math.random() - 0.5).slice(0, 20) : QUIZ.filter(q => q.go === +s);
+    const ALLQ = QUIZ.concat(window.QUIZ_AGENTS || []);
+    const qs = s === 'mixed' ? [...ALLQ].sort(() => Math.random() - 0.5).slice(0, 20) : s === 'A' ? window.QUIZ_AGENTS : QUIZ.filter(q => q.go === +s);
     Quiz(el, qs, 'bank-' + s);
   }
   document.querySelectorAll('#sets button').forEach(b => b.addEventListener('click', () => {
     document.querySelectorAll('#sets button').forEach(x => x.setAttribute('aria-pressed', x === b)); load(b.dataset.s);
   }));
-  document.addEventListener('DOMContentLoaded', () => load('1'));
+  document.addEventListener('DOMContentLoaded', () => { const h = location.hash === '#agents' ? 'A' : '1'; document.querySelectorAll('#sets button').forEach(x => x.setAttribute('aria-pressed', x.dataset.s === h)); load(h); });
 </script>
 </body>
 </html>
